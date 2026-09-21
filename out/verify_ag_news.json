@@ -1,0 +1,24 @@
+{
+ "dataset": "ag_news",
+ "n_cal": 100,
+ "n_eval": 200,
+ "cross_only": 0.825,
+ "fused": 0.935,
+ "gain_pp": 11.00000000000001,
+ "learned": {
+  "n": 100,
+  "temps": {
+   "cross": 1.2123797986995148,
+   "laya": 0.4455085903999116
+  },
+  "weights": {
+   "cross": 0.3999999999999999,
+   "laya": 0.6000000000000001
+  },
+  "fit_acc": 0.97,
+  "per_backend_acc": {
+   "cross": 0.79,
+   "laya": 0.97
+  }
+ }
+}
