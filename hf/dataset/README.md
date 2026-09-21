@@ -95,7 +95,14 @@ to 60.8 % while halving latency — see the
 [repo](https://github.com/zhlei07/open-system-one).
 
 Latency is not comparable in kind: Jev's 381 ms is mostly network from our location,
-Laya's 19–86 ms is local CPU compute.
+Laya's is local compute.
+
+**Correction.** We first described Laya's 19–86 ms as CPU. It was not — `laya.load()`
+auto-selects `cuda > mps > cpu` and chose **Apple MPS**, while every other stack here is
+pure CPU, batch = 1. Re-measured like-for-like on CPU (250 items/task): 59.5 ms (SST-2),
+78.0 ms (AG News), 61.9 ms (Emotion), **309.0 ms** (BANKING77) — about 3× higher. On
+BANKING77 that leaves Laya at 309 ms against Jev's 381 ms while scoring 54.3 % against
+77.8 %. The shortlist gains value on CPU rather than losing it: 309.0 ms → 169.9 ms.
 
 ## Provenance
 
