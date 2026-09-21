@@ -1,0 +1,6 @@
+gradio>=4.44
+numpy
+torch
+transformers>=4.48
+model2vec
+huggingface_hub

@@ -7,6 +7,10 @@ It is a measurement: 10,000 classification/routing decisions, one machine, one s
 option descriptions, run through six different stacks — and an honest account of
 which ideas worked, which didn't, and what each one costs in latency, RAM and CPU.
 
+**Artifacts** — [model (8 floats)](https://huggingface.co/dylantom2012/fly-head-potion-8m) ·
+[interactive results](https://huggingface.co/spaces/dylantom2012/open-system-one) ·
+[per-item predictions](https://huggingface.co/datasets/dylantom2012/open-system-one-bench)
+
 中文版：[README.zh.md](README.zh.md) · 详细报告：[REPORT.md](out/REPORT.md)
 
 ---
@@ -141,18 +145,30 @@ open model lands within 0.1 pp of Jev.
 
 ## How this was built
 
-The question and the direction came from the repository owner:
+**The repository owner does not program.** The contribution was a hunch and a set of
+judgement calls:
 
 > *"The hyped Jev model is probably just a fast text encoder in front of a small
 > decision head. Can we reproduce it with a static embedding, MiniLM, and ModernBERT?"*
 
-Every experiment, measurement and analysis in this repo was then designed and run by
-**Claude Code (Opus 5)** in a single working session — including the eight ideas that
-failed, and two measurement bugs it introduced and then caught (a contaminated latency
-run, and an overwritten results file). All raw outputs are committed, so the numbers can
-be **checked rather than trusted**.
+Every experiment, measurement and analysis here was designed and run by **Claude Code
+(Opus 5)** in a single working session — including the eight ideas that failed and two
+measurement bugs it introduced and then caught (a latency run contaminated by concurrent
+HTTP traffic, and a results file it overwrote).
 
-We think that is the right way to publish a benchmark: not "believe our table", but
+That is not the same as "the AI did it all". Three interventions from the owner changed
+the outcome, and none of them required writing a line of code:
+
+1. **"Drop Qwen."** The agent had started ensembling a generative model into a stack
+   whose whole premise was cheap local parts, for a gain that turned out to be negative.
+2. **"Test under genuinely fair conditions. We need the real numbers before we decide."**
+   This forced the enriched-description re-run — which produced the most interesting
+   finding in this repo.
+3. **"Are you sure the task hasn't drifted?"** It had. That question pulled a day's work
+   back onto its original question.
+
+All raw outputs are committed, so the numbers can be **checked rather than trusted**.
+We think that is how a benchmark should be published: not "believe our table", but
 "here is every file we produced, find our mistakes".
 
 ## Where this goes next

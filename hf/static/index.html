@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>open-system-one</title>
+<style>
+:root{--bg:#fbfbfd;--fg:#16181d;--mut:#6b7280;--line:#e5e7eb;--card:#fff;--acc:#4f46e5;--good:#0f766e;--bad:#b91c1c;--chip:#f3f4f6}
+:root:not([data-theme=light]) @media(prefers-color-scheme:dark){}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1013;--fg:#e7e9ee;--mut:#9aa1ad;--line:#242830;--card:#15181d;--acc:#8b87f5;--good:#5eead4;--bad:#fca5a5;--chip:#1c2028}}
+:root[data-theme=dark]{--bg:#0e1013;--fg:#e7e9ee;--mut:#9aa1ad;--line:#242830;--card:#15181d;--acc:#8b87f5;--good:#5eead4;--bad:#fca5a5;--chip:#1c2028}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:40px 16px 80px}
+h1{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
+h2{font-size:19px;margin:44px 0 12px;letter-spacing:-.01em}
+.sub{color:var(--mut);margin:0 0 22px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}
+.big{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0}
+.stat{flex:1 1 150px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.stat b{display:block;font-size:26px;letter-spacing:-.02em}
+.stat span{color:var(--mut);font-size:12.5px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:right;padding:8px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+th{color:var(--mut);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+.win{color:var(--good);font-weight:600}.lose{color:var(--bad)}
+.tog{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;margin-bottom:10px}
+.tog button{background:transparent;border:0;color:var(--mut);padding:7px 14px;font:inherit;font-size:13px;cursor:pointer}
+.tog button[aria-pressed=true]{background:var(--acc);color:#fff}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.chip{display:inline-block;background:var(--chip);border-radius:6px;padding:2px 7px;font-size:12px;color:var(--mut)}
+a{color:var(--acc)}
+footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+</style></head><body><div class="wrap">
+
+<h1>open-system-one</h1>
+<p class="sub">An independent benchmark of TypeSafe's <span class="mono">Jev</span> against open, CPU-only stacks.
+10,000 decisions · 4 datasets · Apple M5 Pro · CPU · batch = 1.</p>
+
+<div class="big">
+  <div class="stat"><b>79.3 %</b><span>typesafe/jev — best macro</span></div>
+  <div class="stat"><b>78.7 %</b><span>open cross-encoder, 149M, CPU</span></div>
+  <div class="stat"><b>0.1 ms</b><span>static embedding + 8-float head</span></div>
+  <div class="stat"><b>$0.284</b><span>Jev, 10k decisions (measured)</span></div>
+</div>
+
+<h2>Accuracy vs latency</h2>
+<div class="card"><div id="chart"></div>
+<p class="sub" style="margin:10px 0 0;font-size:13px">Mean p50 latency across the four tasks (log scale).
+Jev's latency is dominated by network round-trip — see the repo's limitations.</p></div>
+
+<h2>Zero-shot — neither side gets labels</h2>
+<div class="tog" id="cond">
+  <button data-c="bare" aria-pressed="true">bare label names</button>
+  <button data-c="rich" aria-pressed="false">enriched descriptions</button>
+</div>
+<div class="card scroll"><table id="tz"></table></div>
+<p class="sub" style="font-size:13px">Same option text for every stack. Neither condition is neutral:
+the rewrite moves Jev <span class="win">+0.5 pp</span>, the bi-encoder <span class="win">+6.3 pp</span>,
+and the cross-encoder <span class="lose">−4.3 pp</span>.</p>
+
+<h2>With ~2,000 labels per task <span class="chip">not comparable to Jev</span></h2>
+<div class="card scroll"><table id="tf"></table></div>
+
+<h2>Which stack is fastest for <i>your</i> option count?</h2>
+<div class="card">
+  <label>Options in your enum: <b id="kv" class="mono">4</b></label>
+  <input type="range" id="k" min="2" max="77" value="4">
+  <div id="cross" style="margin-top:12px"></div>
+  <p class="sub" style="font-size:13px;margin:8px 0 0">Cross-encoder cost grows linearly with option count;
+  Jev's is flat (381 ms at 2 options, 392 ms at 77). Extrapolated from measured points.</p>
+</div>
+
+<h2>Eight things that did not work</h2>
+<div class="card scroll"><table id="tx"></table></div>
+
+<footer>
+Code, raw outputs and per-item predictions:
+<a href="https://github.com/zhlei07/open-system-one">github.com/zhlei07/open-system-one</a> ·
+Model: <a href="https://huggingface.co/dylantom2012/fly-head-potion-8m">fly-head-potion-8m</a><br>
+Direction from the repo owner; every experiment designed and run by Claude Code in one session.
+Check the numbers rather than trust them.
+</footer>
+</div>
+<script>
+const P=n=>n==null?"—":(n*100).toFixed(1)+" %", MS=n=>n==null?"—":(n<1?n.toFixed(2):n<100?n.toFixed(0):Math.round(n))+" ms";
+const mean=o=>{const v=Object.values(o).filter(x=>x!=null);return v.reduce((a,b)=>a+b,0)/v.length};
+let D=null,cond="bare";
+fetch("data.json").then(r=>r.json()).then(d=>{D=d;render()});
+
+function rows(list){return list.map(r=>({...r,macro:mean(r.acc),lat:mean(r.lat)}))}
+function table(el,list,hdr){
+  const t=document.getElementById(el);
+  t.innerHTML="<tr>"+hdr.map(h=>`<th>${h}</th>`).join("")+"</tr>"+list.map(r=>
+    `<tr><td>${r.name}</td>`+D.datasets.map(d=>`<td>${P(r.acc[d])}</td>`).join("")+
+    `<td><b>${P(r.macro)}</b></td><td>${MS(r.lat)}</td><td>${r.cloud?"cloud":r.ram?Math.round(r.ram)+" MB":"—"}</td></tr>`).join("");
+}
+function render(){
+  const hdr=["stack",...D.datasets.map((d,i)=>`${d} (${[2,4,6,77][i]})`),"macro","p50","RAM"];
+  const z=rows(D.zero).filter(r=>cond==="bare"?!/enriched/.test(r.name):!/bare/.test(r.name));
+  table("tz",z,hdr); table("tf",rows(D.few),hdr);
+  document.getElementById("tx").innerHTML="<tr><th>idea</th><th>result</th><th>why</th></tr>"+
+    D.failures.map(f=>`<tr><td>${f[0]}</td><td class="${f[1].startsWith("-")||f[1]==="35.0 %"?"lose":""}"><b>${f[1]}</b></td><td style="text-align:left;color:var(--mut)">${f[2]}</td></tr>`).join("");
+  chart(rows(D.zero).concat(rows(D.few)));
+}
+document.getElementById("cond").onclick=e=>{
+  if(!e.target.dataset.c)return; cond=e.target.dataset.c;
+  [...e.currentTarget.children].forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===cond)); render();
+};
+function chart(pts){
+  const W=920,H=330,L=54,B=44,R=18,T=14;
+  const xs=pts.map(p=>Math.log10(Math.max(p.lat,.05))),ys=pts.map(p=>p.macro);
+  const x0=Math.min(...xs)-.25,x1=Math.max(...xs)+.25,y0=Math.min(...ys)-.03,y1=Math.max(...ys)+.03;
+  const X=v=>L+(Math.log10(Math.max(v,.05))-x0)/(x1-x0)*(W-L-R), Y=v=>H-B-(v-y0)/(y1-y0)*(H-T-B);
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="overflow:visible" role="img" aria-label="accuracy versus latency">`;
+  for(let g=0;g<=4;g++){const v=y0+(y1-y0)*g/4;s+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/>`+
+    `<text x="${L-8}" y="${Y(v)+4}" text-anchor="end" fill="var(--mut)" font-size="11">${(v*100).toFixed(0)}%</text>`}
+  [0.1,1,10,100,1000].forEach(v=>{if(Math.log10(v)>x0&&Math.log10(v)<x1)
+    s+=`<text x="${X(v)}" y="${H-B+18}" text-anchor="middle" fill="var(--mut)" font-size="11">${v<1?v:v+""} ms</text>`});
+  pts.forEach(p=>{const cloud=p.cloud,few=/2k labels/.test(p.name);
+    s+=`<circle cx="${X(p.lat)}" cy="${Y(p.macro)}" r="6" fill="${cloud?"var(--bad)":few?"var(--good)":"var(--acc)"}" opacity=".9"/>`+
+       `<text x="${X(p.lat)+10}" y="${Y(p.macro)+4}" font-size="11" fill="var(--fg)">${p.name.replace(/ \(.*?\)/,"")}</text>`});
+  s+=`<text x="${(W)/2}" y="${H-4}" text-anchor="middle" fill="var(--mut)" font-size="11">p50 latency, log scale — lower left is worse, upper left is better</text></svg>`;
+  document.getElementById("chart").innerHTML=s;
+}
+const k=document.getElementById("k");
+k.oninput=()=>{
+  const n=+k.value; document.getElementById("kv").textContent=n;
+  const per=(616-50)/(20-2), xe=50+per*(Math.min(n,20)-2)+(n>20?(n-20)*per:0);
+  const jev=381, bi=15.7;
+  document.getElementById("cross").innerHTML=
+   `<table><tr><th>stack</th><th>est. p50</th><th></th></tr>`+
+   [["Bi-encoder + 8-float head",bi,"needs ~2k labels"],
+    ["Cross-encoder 149M (zero-shot)",xe,"scales with option count"],
+    ["typesafe/jev (cloud, zero-shot)",jev,"flat in option count"]]
+   .sort((a,b)=>a[1]-b[1]).map(([nm,v,note],i)=>
+     `<tr><td>${i===0?"🏆 ":""}${nm}</td><td><b>${MS(v)}</b></td><td style="text-align:left;color:var(--mut)">${note}</td></tr>`).join("")+`</table>`;
+};
+k.dispatchEvent(new Event("input"));
+</script></body></html>
