@@ -61,12 +61,6 @@ Both conditions are reported, because neither is neutral (see below).
 | Bi-encoder + head — bare label names | 81.1 % | 66.3 % | 43.6 % | 63.2 % | **63.6 %** |
 | Bi-encoder + head — enriched descriptions | 82.8 % | 80.0 % | 50.8 % | 65.8 % | **69.9 %** |
 
-### With 2,000 labels (not comparable to Jev)
-
-| stack | sst2 | ag_news | emotion | banking77 | macro |
-|---|---|---|---|---|---|
-| ModernBERT-embed + head | 85.8 % | 89.5 % | 66.2 % | 88.8 % | **82.6 %** |
-
 **Best result per stack, zero-shot, no labels on either side:**
 
 | | best macro | best condition | p50 latency | RAM |
