@@ -141,7 +141,7 @@ Jev 发布一周后，[Laya](https://huggingface.co/convaiinnovations/laya) 出�
 
 三个结论：
 
-**Laya 在 AG News 上完胜**——93.9%，比 Jev 高 5.3 pp，在笔记本 CPU 上只要 26 ms。
+**Laya 在 AG News 上完胜**——93.9%，比 Jev 高 5.3 pp。
 它 README 自称 0.950，我们实测 0.939；它发布的 Emotion 是 0.595，我们实测 0.582。
 **它的自报数据经得起核对**，这一点值得明说。
 
