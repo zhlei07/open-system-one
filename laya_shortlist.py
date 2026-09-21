@@ -32,8 +32,11 @@ cand = np.argsort(-(bank.zero(z["eval"][idx]) @ w), axis=1)[:, :TOPK]
 ceiling = float((cand == y[:, None]).any(1).mean())
 print(f"{DS}: 双塔裁到 top-{TOPK}，天花板 recall = {ceiling*100:.1f}%", flush=True)
 
-agent = laya.load("convaiinnovations/laya")
+agent = laya.load("convaiinnovations/laya", device=os.environ.get("LAYA_DEVICE") or None)
 agent.cfg["head_max_len"] = 512; agent.cfg["max_len"] = 1024
+# 设备必须落盘：laya.load() 不传 device 时会自动选 cuda>mps>cpu，
+# 在 Mac 上它默认走 mps，和本仓库其他纯 CPU 链路不可比。
+print(f"device={agent.device}", flush=True)
 
 correct = 0; lat = []
 t0 = time.perf_counter()
@@ -50,7 +53,8 @@ for row, i in enumerate(idx):
 
 acc = correct / len(idx)
 out = {"dataset": DS, "topk": TOPK, "n": len(idx), "ceiling_recall": ceiling,
+       "device": str(agent.device),
        "acc": acc, "lat_p50_ms": round(float(np.median(lat)), 1),
        "wall_s": round(time.perf_counter() - t0, 1)}
-Path(f"out/laya_shortlist_{DS}_k{TOPK}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1))
+Path(f"out/laya_shortlist_{DS}_k{TOPK}{'_cpu' if agent.device.type == 'cpu' else ''}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1))
 print(f"[laya+裁剪{TOPK}] {DS} {acc*100:.1f}%  p50={out['lat_p50_ms']}ms  {out['wall_s']}s")

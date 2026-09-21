@@ -141,14 +141,14 @@ and 72 vs 77 labels; our Jev column is directly measured.)
 |---|---|---|---|---|---|---|
 | `typesafe/jev` (enriched) | 91.6 % | 88.6 % | 59.0 % | 77.8 % | **79.3 %** | 381 ms |
 | Cross-encoder 149M (bare) | 85.5 % | 84.4 % | **76.2 %** | 68.8 % | **78.7 %** | 50–616 ms |
-| **Laya 421M (bare)** | 86.5 % | **93.9 %** | 58.2 % | 54.3 % | **73.2 %** | **19–86 ms** |
+| **Laya 421M (bare)** | 86.5 % | **93.9 %** | 58.2 % | 54.3 % | **73.2 %** | 19–86 ms *(MPS)* / **60–309 ms** *(CPU)* |
 | bi-encoder + head, 2k labels | 85.8 % | 89.5 % | 66.2 % | **88.8 %** | **82.6 %** | 15.8 ms |
 
 Three things fall out of this:
 
-**Laya wins AG News outright** — 93.9 %, 5.3 pp above Jev, at 26 ms on a laptop CPU. Its own
-README claims 0.950 there; we measure 0.939. Its published Emotion figure (0.595) matches our
-0.582. **Its self-reported numbers hold up**, which is worth saying plainly.
+**Laya wins AG News outright** — 93.9 %, 5.3 pp above Jev. Its own README claims 0.950 there;
+we measure 0.939. Its published Emotion figure (0.595) matches our 0.582. **Its self-reported
+numbers hold up**, which is worth saying plainly.
 
 **Its high-cardinality weakness is real, and we partially fixed it.** Laya's docs explain the
 failure honestly: 77 options share a fixed `head_max_len`, so each label gets 3–4 tokens and
@@ -156,15 +156,31 @@ the texts stop being distinguishable. They recommend *"split large option sets i
 coarse-to-fine hierarchical choice"* — but do not implement it. We had independently built
 exactly that for our own cross-encoder, so we bolted it on:
 
-| BANKING77, 77 options | accuracy | p50 |
-|---|---|---|
-| Laya, all 77 options | 54.3 % | 86.3 ms |
-| **Laya + our zero-shot bi-encoder shortlist to top-20** | **60.8 %** | **39.8 ms** |
-| *(shortlist ceiling, recall@20)* | *97.8 %* | — |
+| BANKING77, 77 options | accuracy | p50 (MPS) | p50 (CPU) |
+|---|---|---|---|
+| Laya, all 77 options | 54.3 % | 86.3 ms | 309.0 ms |
+| **Laya + our zero-shot bi-encoder shortlist to top-20** | **60.8 %** | **39.8 ms** | **169.9 ms** |
+| *(shortlist ceiling, recall@20)* | *97.8 %* | — | — |
+
+*(CPU column measured on a 250-item sample, `laya_cpu.py` / `LAYA_DEVICE=cpu`; it scores
+53.6 % and 62.0 % on that sample, consistent with the full-set 54.3 % / 60.8 %.)*
 
 **+6.5 pp and latency cut in half.** Still 17 pp behind Jev on this task, so the token-budget
 problem is mitigated rather than solved — but the fix costs one cheap bi-encoder pass and is
 the only thing here that made both accuracy and latency better at once.
+
+**Correction — Laya's original latencies were Apple GPU, not CPU.** We first published these
+as CPU numbers. They were not. `laya.load()` auto-selects `cuda > mps > cpu` and silently
+chose **mps** on this Mac, while every other stack in this repo is pure CPU, batch=1. Re-measured
+like-for-like, Laya costs 59.5 ms (SST-2) / 78.0 ms (AG News) / 61.9 ms (Emotion) / **309.0 ms**
+(BANKING77) on CPU — roughly 3× its MPS figures. That mostly removes Laya's apparent latency win
+over Jev on the hardest task (309 ms vs 381 ms) while it still scores 54.3 % against Jev's 77.8 %.
+It also makes the shortlist worth more, not less: on CPU it cuts 309 ms to 170 ms.
+
+The lesson generalises past this one number — we had strict discipline about RAM (one model per
+process) but none about **device**. Anything auto-selected (device, dtype, thread count, batch)
+has to be written into the result file, not remembered. `laya_bench.py` and `laya_shortlist.py`
+now record `device` and accept `LAYA_DEVICE`.
 
 **The three architectures fail in three different ways.** Bi-encoder: no interaction between
 text and option, so abstract labels kill it. Cross-encoder: one forward pass per option, so

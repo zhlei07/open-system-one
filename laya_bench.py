@@ -28,7 +28,8 @@ if LIMIT:
     ev = ev[:LIMIT]
 
 t0 = time.perf_counter()
-agent = laya.load("convaiinnovations/laya", **({"subfolder": CKPT} if CKPT else {}))
+agent = laya.load("convaiinnovations/laya", device=os.environ.get("LAYA_DEVICE") or None,
+                  **({"subfolder": CKPT} if CKPT else {}))
 print(f"加载 {CKPT or 'english'} 用时 {time.perf_counter()-t0:.1f}s", flush=True)
 
 # 77 个选项在默认 192 token 预算下每个只分到 3-4 token —— 官方明确说这是它 banking77
@@ -36,6 +37,8 @@ print(f"加载 {CKPT or 'english'} 用时 {time.perf_counter()-t0:.1f}s", flush=
 agent.cfg["head_max_len"] = 512
 agent.cfg["max_len"] = 1024
 print(f"head_max_len={agent.cfg['head_max_len']} max_len={agent.cfg['max_len']}", flush=True)
+# 设备自动选择（cuda>mps>cpu）会悄悄改变延迟口径，必须显式记录。
+print(f"device={agent.device}", flush=True)
 
 per = {d: [0, 0] for d in DS}
 lat = {d: [] for d in DS}
@@ -67,7 +70,7 @@ for i, r in enumerate(ev):
 
 tag = CKPT or "english"
 Path(f"out/laya_preds_{tag}.jsonl").write_text("\n".join(json.dumps(x) for x in rows))
-out = {"checkpoint": tag, "n": len(ev), "errors": errors,
+out = {"checkpoint": tag, "n": len(ev), "errors": errors, "device": str(agent.device),
        "head_max_len": agent.cfg["head_max_len"], "max_len": agent.cfg["max_len"],
        "wall_s": round(time.perf_counter()-t0, 1),
        "per_dataset": {d: {"acc": per[d][0]/per[d][1] if per[d][1] else None, "n": per[d][1],

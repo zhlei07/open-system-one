@@ -21,9 +21,10 @@ configs:
 
 # open-system-one-bench — per-item predictions, 10,000 decisions, 5 stacks
 
-Per-example predictions for 10,000 classification/routing decisions, from five
-different stacks **including `typesafe/jev`**. As far as we know this is the only
-public per-item output from Jev on a standard benchmark.
+Per-example predictions for 10,000 classification/routing decisions, from six
+different stacks **including `typesafe/jev` and `convaiinnovations/laya`**.
+As far as we know this is the only public per-item output from Jev on a standard
+benchmark, and the only place the two are measured on **identical items**.
 
 With this file you can, **without spending a cent on API calls**:
 
@@ -39,7 +40,8 @@ With this file you can, **without spending a cent on API calls**:
 {"i": 0, "dataset": "banking77", "n_options": 77, "gold": 11,
  "jev_bare": 11, "jev_bare_probs": [0.0, 0.87, ...],
  "jev_enriched": 11, "jev_enriched_probs": [...],
- "cross_bare": 11, "cross_enriched": 34, "bi_fewshot": 11}
+ "cross_bare": 11, "cross_enriched": 34, "bi_fewshot": 11,
+ "laya": 11, "laya_probs": [...]}
 ```
 
 | column | stack | coverage | accuracy |
@@ -49,6 +51,7 @@ With this file you can, **without spending a cent on API calls**:
 | `cross_bare` | ModernBERT-base-zeroshot cross-encoder, bare labels | 10,000 | 78.7 % |
 | `cross_enriched` | same, enriched descriptions | 10,000 | 74.4 % |
 | `bi_fewshot` | ModernBERT-embed + 8-float head, 2,000 labels/task | 10,000 | 82.6 % |
+| `laya` | `convaiinnovations/laya` (421M, English root, `head_max_len=512`) | 10,000 | 73.2 % |
 
 `options.json` — the option list per dataset, in label-index order.
 `split_indices.json` — dataset + gold label for every row of the fit / dev / eval splits.
@@ -74,6 +77,25 @@ carries a non-commercial clause), `mteb/banking77` (CC-BY-4.0).
    solving the same problem and the comparison is not a win. It is included because
    "what does this cost you once you *do* have labels" is the question most production
    teams actually face.
+
+## Jev vs Laya, on identical items
+
+Both are "System One" decision models; only Laya is open. Same 10,000 items, same
+bare label names, same harness:
+
+| | sst2 | ag_news | emotion | banking77 | macro |
+|---|---|---|---|---|---|
+| `typesafe/jev` (bare) | 89.8 % | 88.3 % | 58.6 % | **78.4 %** | **78.8 %** |
+| `laya` (bare) | 86.5 % | **93.9 %** | 58.2 % | 54.3 % | 73.2 % |
+
+Laya wins AG News by 5.6 pp and loses BANKING77 by 24.1 pp. The BANKING77 gap is a
+token-budget artefact its own docs explain: 77 options share one `head_max_len`, so
+each label gets 3–4 tokens. Adding a zero-shot bi-encoder shortlist to top-20 lifts it
+to 60.8 % while halving latency — see the
+[repo](https://github.com/zhlei07/open-system-one).
+
+Latency is not comparable in kind: Jev's 381 ms is mostly network from our location,
+Laya's 19–86 ms is local CPU compute.
 
 ## Provenance
 
