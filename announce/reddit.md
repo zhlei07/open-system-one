@@ -70,7 +70,10 @@ https://github.com/zhlei07/open-system-one
 Model (8 floats): https://huggingface.co/dylantom2012/fly-head-potion-8m
 Demo: https://huggingface.co/spaces/dylantom2012/open-system-one
 
-Direction was mine; every experiment was designed and run by Claude Code in one
-session, including two measurement bugs it introduced and then caught. Everything is
-committed so you can check rather than trust — if I've misconfigured Jev, tell me and
-I'll re-run.
+**On how this was built**, since it's relevant to whether you should trust it: I don't
+program. The hunch was mine; Claude Code designed and ran every experiment in one
+session, including two measurement bugs it introduced and then caught. My actual
+contribution was three course corrections — killing a dead-end generative ensemble,
+demanding a genuinely fair re-test, and asking once whether the task had drifted (it
+had). Everything is committed so you can check rather than trust. If I've
+misconfigured Jev, tell me and I'll re-run.

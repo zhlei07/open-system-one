@@ -65,5 +65,8 @@ Go break it:
 → github.com/zhlei07/open-system-one
 → huggingface.co/spaces/dylantom2012/open-system-one
 
-Direction from me, every experiment run by Claude Code in one session. Check the
-numbers, don't trust them.
+I don't write code. I gave Claude Code one hunch and spent the day telling it when it
+was going nowhere — dropping a dead-end ensemble, forcing a fair re-test, asking "has
+this drifted?" once. That turned out to be the whole job.
+
+Check the numbers, don't trust them.

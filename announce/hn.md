@@ -64,11 +64,25 @@ zero across three tasks), listwise reranking with a 1.5B model (-1.0pp), distill
 (-5.4pp vs the teacher). The one thing that did work was architectural: scoring
 (text, option) jointly instead of comparing two separate embeddings, worth +12 to +24pp.
 
-Full disclosure: I supplied the direction; every experiment was designed and run by
-Claude Code in one session, including two measurement bugs it introduced and then
-caught (a latency run contaminated by concurrent HTTP, and a results file it
-overwrote). All raw outputs are committed, so please check the numbers rather than
-trust them — if I've misconfigured Jev, open an issue and I'll re-run.
+Full disclosure, and it's the part I'd most like feedback on: **I don't program.**
+The hunch was mine, every experiment was designed and run by Claude Code in one
+session — including two measurement bugs it introduced and then caught (a latency run
+contaminated by concurrent HTTP traffic, and a results file it overwrote).
+
+That's not "the AI did it all", though. Three interventions changed the outcome and
+none of them needed a line of code:
+
+- *"Drop Qwen."* It had started ensembling a 1.5B generative model into a stack whose
+  entire premise was cheap local parts, for a gain that turned out to be negative.
+- *"Test under genuinely fair conditions — we need the real numbers before we decide."*
+  That forced the enriched-description re-run, which produced the most interesting
+  result in the repo.
+- *"Are you sure the task hasn't drifted?"* It had.
+
+If there's a transferable lesson here it's that the bottleneck wasn't code, it was
+knowing when to stop something that was going nowhere. All raw outputs are committed,
+so please check the numbers rather than trust them — if I've misconfigured Jev, open
+an issue and I'll re-run.
 
 Repo: https://github.com/zhlei07/open-system-one
 Model: https://huggingface.co/dylantom2012/fly-head-potion-8m
