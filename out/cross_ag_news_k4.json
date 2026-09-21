@@ -1,0 +1,10 @@
+{
+ "dataset": "ag_news",
+ "n": 2500,
+ "k": 4,
+ "n_options": 4,
+ "acc_argmax": 0.8444,
+ "lat_p50_ms": 311.2,
+ "lat_p95_ms": 489.8,
+ "wall_s": 815.9
+}

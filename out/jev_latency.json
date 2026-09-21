@@ -1,0 +1,12 @@
+{
+ "n": 300,
+ "mode": "sequential",
+ "lat_p50_ms": 381.4,
+ "lat_p95_ms": 846.5,
+ "per_dataset_p50_ms": {
+  "sst2": 381.7,
+  "ag_news": 382.1,
+  "emotion": 374.0,
+  "banking77": 392.1
+ }
+}

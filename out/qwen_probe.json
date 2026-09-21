@@ -1,0 +1,20 @@
+{
+ "label": "qwen_probe",
+ "n": 400,
+ "lat_mean_ms": 160.83,
+ "lat_p50_ms": 111.581,
+ "lat_p95_ms": 331.142,
+ "lat_p99_ms": 356.202,
+ "throughput_item_s": 6.22,
+ "cpu_s_per_1k": 231.057,
+ "cpu_efficiency": 1.44,
+ "peak_rss_mb": 2735.2,
+ "model_rss_mb": 2382.3,
+ "load_wall_s": 4.39,
+ "per_dataset_p50_ms": {
+  "sst2": 103.5,
+  "ag_news": 110.1,
+  "emotion": 109.9,
+  "banking77": 314.2
+ }
+}

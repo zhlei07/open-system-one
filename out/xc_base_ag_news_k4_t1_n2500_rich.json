@@ -1,0 +1,14 @@
+{
+ "model": "base",
+ "params_m": 149,
+ "dataset": "ag_news",
+ "n": 2500,
+ "enriched": true,
+ "k": 4,
+ "n_options": 4,
+ "templates": 1,
+ "acc_mean_template": 0.8464,
+ "lat_p50_ms": 378.7,
+ "lat_p95_ms": 568.7,
+ "wall_s": 986.6
+}

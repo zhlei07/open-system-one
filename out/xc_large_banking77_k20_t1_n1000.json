@@ -1,0 +1,13 @@
+{
+ "model": "large",
+ "params_m": 395,
+ "dataset": "banking77",
+ "n": 1000,
+ "k": 20,
+ "n_options": 77,
+ "templates": 1,
+ "acc_mean_template": 0.69,
+ "lat_p50_ms": 1866.0,
+ "lat_p95_ms": 3498.9,
+ "wall_s": 2056.2
+}

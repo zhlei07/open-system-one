@@ -1,0 +1,22 @@
+# 虚拟环境（1 GB）
+.venv/
+
+# 派生数据：可由脚本重建，且含原数据集正文，不重新分发
+# 注意：.gitignore 不支持行尾注释，注释必须单独成行
+cache/emb/
+cache/tasks.json
+cache/*.parquet
+
+# 本地运行产物
+out/*.log
+out/power_*.txt
+out/*.bak
+__pycache__/
+*.pyc
+.DS_Store
+
+# 任何形式的凭证，一律不进库
+.env
+.dev.vars
+*.key
+*.pem

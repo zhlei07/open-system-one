@@ -1,0 +1,10 @@
+{
+ "dataset": "banking77",
+ "n": 2500,
+ "k": 20,
+ "n_options": 77,
+ "acc_argmax": 0.6884,
+ "lat_p50_ms": 615.8,
+ "lat_p95_ms": 1193.5,
+ "wall_s": 1712.0
+}

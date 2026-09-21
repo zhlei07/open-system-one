@@ -1,0 +1,17 @@
+{
+ "label": "modernbert",
+ "n": 10000,
+ "lat_mean_ms": 18.031,
+ "lat_p50_ms": 15.65,
+ "lat_p95_ms": 27.694,
+ "lat_p99_ms": 31.381,
+ "throughput_item_s": 55.43,
+ "cpu_s_per_1k": 22.055,
+ "cpu_efficiency": 1.22,
+ "peak_rss_mb": 2264.0,
+ "model_rss_mb": 488.6,
+ "load_wall_s": 6.47,
+ "offline_encode_s": 71.6,
+ "params_m": 149.0,
+ "dim": 768
+}

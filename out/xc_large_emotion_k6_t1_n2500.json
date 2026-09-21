@@ -1,0 +1,13 @@
+{
+ "model": "large",
+ "params_m": 395,
+ "dataset": "emotion",
+ "n": 2500,
+ "k": 6,
+ "n_options": 6,
+ "templates": 1,
+ "acc_mean_template": 0.7304,
+ "lat_p50_ms": 619.4,
+ "lat_p95_ms": 1210.2,
+ "wall_s": 1691.1
+}

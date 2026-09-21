@@ -1,0 +1,171 @@
+[
+ {
+  "name": "mbert-embed + Fly（few-shot 2000 标注）",
+  "acc": 0.8256,
+  "lat": 15.767900000000001,
+  "ram": 489.5,
+  "note": "",
+  "per": {
+   "sst2": 0.858,
+   "ag_news": 0.8948,
+   "emotion": 0.6616,
+   "banking77": 0.888
+  }
+ },
+ {
+  "name": "minilm + Fly（few-shot 2000 标注）",
+  "acc": 0.7945,
+  "lat": 2.8222,
+  "ram": 451.7,
+  "note": "",
+  "per": {
+   "sst2": 0.7972,
+   "ag_news": 0.8872,
+   "emotion": 0.6424,
+   "banking77": 0.8512
+  }
+ },
+ {
+  "name": "typesafe/jev（云端）",
+  "acc": 0.7876,
+  "lat": 381.4,
+  "ram": null,
+  "note": "延迟含网络往返",
+  "per": {
+   "sst2": 0.898,
+   "ag_news": 0.8828,
+   "emotion": 0.586,
+   "banking77": 0.7836
+  }
+ },
+ {
+  "name": "交叉编码 base（零样本）",
+  "acc": 0.7874,
+  "lat": 298.25,
+  "ram": null,
+  "note": "banking77 用双塔裁 top-20",
+  "per": {
+   "sst2": 0.8548,
+   "ag_news": 0.8444,
+   "emotion": 0.762,
+   "banking77": 0.6884
+  }
+ },
+ {
+  "name": "交叉编码 large（零样本）",
+  "acc": 0.7864,
+  "lat": 1005.9,
+  "ram": null,
+  "note": "banking77 用双塔裁 top-20 [仅 2/4 任务]",
+  "per": {
+   "sst2": 0.8828,
+   "ag_news": null,
+   "emotion": null,
+   "banking77": 0.69
+  }
+ },
+ {
+  "name": "static + Fly（few-shot 2000 标注）",
+  "acc": 0.7817000000000001,
+  "lat": 0.1067,
+  "ram": 82.5,
+  "note": "",
+  "per": {
+   "sst2": 0.7832,
+   "ag_news": 0.8772,
+   "emotion": 0.6728,
+   "banking77": 0.7936
+  }
+ },
+ {
+  "name": "交叉编码蒸馏 -> 双塔 Fly（零人工标注）",
+  "acc": 0.7384000000000001,
+  "lat": 15.767900000000001,
+  "ram": 489.5,
+  "note": "线下付一次交叉编码的钱",
+  "per": {
+   "sst2": 0.824,
+   "ag_news": 0.8304,
+   "emotion": 0.5784,
+   "banking77": 0.7208
+  }
+ },
+ {
+  "name": "mbert-embed + Fly（零样本）",
+  "acc": 0.6560999999999999,
+  "lat": 15.695500000000001,
+  "ram": 489.5,
+  "note": "",
+  "per": {
+   "sst2": 0.8244,
+   "ag_news": 0.6436,
+   "emotion": 0.5292,
+   "banking77": 0.6272
+  }
+ },
+ {
+  "name": "modernbert + Fly（few-shot 2000 标注）",
+  "acc": 0.6273,
+  "lat": 15.7329,
+  "ram": 488.6,
+  "note": "",
+  "per": {
+   "sst2": 0.5988,
+   "ag_news": 0.8592,
+   "emotion": 0.4668,
+   "banking77": 0.5844
+  }
+ },
+ {
+  "name": "minilm + Fly（零样本）",
+  "acc": 0.5957,
+  "lat": 2.7523,
+  "ram": 451.7,
+  "note": "",
+  "per": {
+   "sst2": 0.6512,
+   "ag_news": 0.6944,
+   "emotion": 0.4168,
+   "banking77": 0.6204
+  }
+ },
+ {
+  "name": "static + Fly（零样本）",
+  "acc": 0.5782,
+  "lat": 0.0398,
+  "ram": 82.5,
+  "note": "",
+  "per": {
+   "sst2": 0.7332,
+   "ag_news": 0.5864,
+   "emotion": 0.4168,
+   "banking77": 0.5764
+  }
+ },
+ {
+  "name": "Qwen2.5-0.5B 生成",
+  "acc": 0.4957,
+  "lat": 111.581,
+  "ram": 2382.3,
+  "note": "",
+  "per": {
+   "sst2": 0.844,
+   "ag_news": 0.6556,
+   "emotion": 0.3412,
+   "banking77": 0.142
+  }
+ },
+ {
+  "name": "modernbert + Fly（零样本）",
+  "acc": 0.35009999999999997,
+  "lat": 15.6606,
+  "ram": 488.6,
+  "note": "",
+  "per": {
+   "sst2": 0.5128,
+   "ag_news": 0.4688,
+   "emotion": 0.1764,
+   "banking77": 0.2424
+  }
+ }
+]

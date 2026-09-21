@@ -1,0 +1,36 @@
+{
+ "n": 10000,
+ "concurrency": 8,
+ "wall_s": 508.7,
+ "errors": 0,
+ "error_sample": [],
+ "lat_concurrent_p50_ms": 371.0,
+ "lat_concurrent_p95_ms": 607.9,
+ "per_dataset": {
+  "sst2": {
+   "acc": 0.898,
+   "n": 2500,
+   "ece": 0.05273999999999999
+  },
+  "ag_news": {
+   "acc": 0.8828,
+   "n": 2500,
+   "ece": 0.06864800000000003
+  },
+  "emotion": {
+   "acc": 0.586,
+   "n": 2500,
+   "ece": 0.270712
+  },
+  "banking77": {
+   "acc": 0.7836,
+   "n": 2500,
+   "ece": 0.0952759999999999
+  }
+ },
+ "overall_acc": 0.7876,
+ "macro_acc": 0.7876,
+ "input_tokens": 6764108,
+ "cost_usd": 0.2841,
+ "_note": "10k 全量结果，从 out/jev_run.log 的完成行与当时打印的 JSON 还原；原文件被链式进程里的旧版 stage_jev(limit=500) 覆写。重跑命令：JEV_CONC=8 python run.py jev"
+}

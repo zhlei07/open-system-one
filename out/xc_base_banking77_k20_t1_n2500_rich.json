@@ -1,0 +1,14 @@
+{
+ "model": "base",
+ "params_m": 149,
+ "dataset": "banking77",
+ "n": 2500,
+ "enriched": true,
+ "k": 20,
+ "n_options": 77,
+ "templates": 1,
+ "acc_mean_template": 0.5688,
+ "lat_p50_ms": 707.4,
+ "lat_p95_ms": 1265.9,
+ "wall_s": 1938.2
+}

@@ -1,0 +1,36 @@
+{
+ "label": "qwen0.5b",
+ "n": 10000,
+ "lat_mean_ms": 208.15,
+ "lat_p50_ms": 129.052,
+ "lat_p95_ms": 446.458,
+ "lat_p99_ms": 681.067,
+ "throughput_item_s": 4.8,
+ "cpu_s_per_1k": 296.969,
+ "cpu_efficiency": 1.43,
+ "peak_rss_mb": 3427.1,
+ "model_rss_mb": 378.8,
+ "load_wall_s": 3.98,
+ "per_dataset": {
+  "sst2": {
+   "acc": 0.844,
+   "n": 2500
+  },
+  "ag_news": {
+   "acc": 0.6556,
+   "n": 2500
+  },
+  "emotion": {
+   "acc": 0.3412,
+   "n": 2500
+  },
+  "banking77": {
+   "acc": 0.142,
+   "n": 2500
+  }
+ },
+ "overall_acc": 0.4957,
+ "macro_acc": 0.4957,
+ "parse_fail": 396,
+ "parse_fail_rate": 0.0396
+}

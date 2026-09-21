@@ -1,0 +1,17 @@
+{
+ "label": "mbert-embed",
+ "n": 10000,
+ "lat_mean_ms": 18.434,
+ "lat_p50_ms": 15.685,
+ "lat_p95_ms": 28.087,
+ "lat_p99_ms": 33.602,
+ "throughput_item_s": 54.22,
+ "cpu_s_per_1k": 22.89,
+ "cpu_efficiency": 1.24,
+ "peak_rss_mb": 2342.3,
+ "model_rss_mb": 489.5,
+ "load_wall_s": 8.39,
+ "offline_encode_s": 79.0,
+ "params_m": 149.0,
+ "dim": 768
+}

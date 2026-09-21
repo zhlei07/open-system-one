@@ -1,0 +1,13 @@
+{
+ "model": "base",
+ "params_m": 149,
+ "dataset": "sst2",
+ "n": 1000,
+ "k": 2,
+ "n_options": 2,
+ "templates": 3,
+ "acc_mean_template": 0.841,
+ "lat_p50_ms": 160.8,
+ "lat_p95_ms": 335.6,
+ "wall_s": 184.7
+}

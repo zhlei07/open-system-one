@@ -1,0 +1,13 @@
+{
+ "model": "large",
+ "params_m": 395,
+ "dataset": "ag_news",
+ "n": 1000,
+ "k": 4,
+ "n_options": 4,
+ "templates": 3,
+ "acc_mean_template": 0.851,
+ "lat_p50_ms": 2828.9,
+ "lat_p95_ms": 4460.8,
+ "wall_s": 3022.4
+}

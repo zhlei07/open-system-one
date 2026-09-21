@@ -1,0 +1,38 @@
+{
+ "sst2": {
+  "raw": 0.8548,
+  "tmpl_mean": 0.8548,
+  "center": 0.8576,
+  "n_templates": 1,
+  "n": 2500,
+  "fuse": 0.86,
+  "fuse_oracle": 0.8652
+ },
+ "ag_news": {
+  "raw": 0.8444,
+  "tmpl_mean": 0.8444,
+  "center": 0.846,
+  "n_templates": 1,
+  "n": 2500,
+  "fuse": 0.8524,
+  "fuse_oracle": 0.854
+ },
+ "emotion": {
+  "raw": 0.762,
+  "tmpl_mean": 0.762,
+  "center": 0.7308,
+  "n_templates": 1,
+  "n": 2500,
+  "fuse": 0.7224,
+  "fuse_oracle": 0.7772
+ },
+ "banking77": {
+  "raw": 0.6884,
+  "tmpl_mean": 0.6884,
+  "center": 0.714,
+  "n_templates": 1,
+  "n": 2500,
+  "fuse": 0.6512,
+  "fuse_oracle": 0.732
+ }
+}

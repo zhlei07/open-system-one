@@ -1,0 +1,38 @@
+{
+ "criteria": "enriched",
+ "n": 10000,
+ "errors": 16,
+ "error_sample": [
+  "4295: The read operation timed out",
+  "4296: The read operation timed out",
+  "4297: The read operation timed out",
+  "4298: The read operation timed out",
+  "4299: The read operation timed out"
+ ],
+ "wall_s": 641.1,
+ "per_dataset": {
+  "sst2": {
+   "acc": 0.9164,
+   "n": 2500,
+   "ece": 0.03343211854225071
+  },
+  "ag_news": {
+   "acc": 0.8864,
+   "n": 2500,
+   "ece": 0.0750861723446893
+  },
+  "emotion": {
+   "acc": 0.59,
+   "n": 2500,
+   "ece": 0.278524458700882
+  },
+  "banking77": {
+   "acc": 0.7784,
+   "n": 2500,
+   "ece": 0.11259807846277031
+  }
+ },
+ "overall_acc": 0.7928,
+ "input_tokens": 8526208,
+ "cost_usd": 0.3581
+}

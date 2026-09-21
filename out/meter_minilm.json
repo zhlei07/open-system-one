@@ -1,0 +1,17 @@
+{
+ "label": "minilm",
+ "n": 10000,
+ "lat_mean_ms": 2.943,
+ "lat_p50_ms": 2.742,
+ "lat_p95_ms": 3.741,
+ "lat_p99_ms": 5.148,
+ "throughput_item_s": 339.22,
+ "cpu_s_per_1k": 3.781,
+ "cpu_efficiency": 1.28,
+ "peak_rss_mb": 1258.8,
+ "model_rss_mb": 451.7,
+ "load_wall_s": 9.24,
+ "offline_encode_s": 10.0,
+ "params_m": 22.7,
+ "dim": 384
+}

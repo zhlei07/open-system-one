@@ -1,0 +1,13 @@
+{
+ "repo": "Qwen/Qwen2.5-1.5B-Instruct",
+ "dataset": "banking77",
+ "topk": 5,
+ "n": 500,
+ "ceiling_recall": 0.882,
+ "acc_listwise": 0.586,
+ "acc_fused_with_cross": 0.68,
+ "acc_cross_alone": 0.69,
+ "lat_p50_ms": 267.4,
+ "lat_p95_ms": 315.3,
+ "wall_s": 136.0
+}

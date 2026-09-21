@@ -1,0 +1,13 @@
+{
+ "model": "large",
+ "params_m": 395,
+ "dataset": "sst2",
+ "n": 1000,
+ "k": 2,
+ "n_options": 2,
+ "templates": 3,
+ "acc_mean_template": 0.899,
+ "lat_p50_ms": 463.9,
+ "lat_p95_ms": 976.0,
+ "wall_s": 533.9
+}
