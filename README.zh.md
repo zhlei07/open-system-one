@@ -7,9 +7,12 @@
 跑过六种不同的技术栈——以及一份诚实的记录：哪些想法有用、哪些没用、
 每一种在延迟、内存、CPU 上各要付多少钱。
 
+**完整叙述** — [含八个失败尝试的全文](https://huggingface.co/blog/dylantom2012/i-benchmarked-jev-against-open-cpu-only-stacks-it)
+
 **产物** — [模型（8 个浮点数）](https://huggingface.co/dylantom2012/fly-head-potion-8m) ·
-[交互式结果浏览器](https://huggingface.co/spaces/dylantom2012/open-system-one) ·
-[逐条预测数据集](https://huggingface.co/datasets/dylantom2012/open-system-one-bench)
+[逐条预测数据集](https://huggingface.co/datasets/dylantom2012/open-system-one-bench) ·
+[结果浏览器](https://huggingface.co/spaces/dylantom2012/open-system-one) ·
+[在线 demo](https://huggingface.co/spaces/dylantom2012/open-system-one-demo)
 
 English: [README.md](README.md) · 详细报告：[REPORT.md](out/REPORT.md)
 

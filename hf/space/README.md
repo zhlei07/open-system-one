@@ -1,5 +1,5 @@
 ---
-title: open-system-one
+title: open-system-one demo
 emoji: ⚡
 colorFrom: indigo
 colorTo: green
@@ -8,7 +8,7 @@ sdk_version: 5.9.1
 app_file: app.py
 pinned: false
 license: mit
-short_description: Typed decisions without an LLM — 0.1ms static head vs zero-shot cross-encoder, benchmarked against typesafe/jev
+short_description: 0.1ms decision head vs zero-shot cross-encoder
 ---
 
 Demo for [github.com/zhlei07/open-system-one](https://github.com/zhlei07/open-system-one) —

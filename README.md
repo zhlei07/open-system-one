@@ -7,9 +7,12 @@ It is a measurement: 10,000 classification/routing decisions, one machine, one s
 option descriptions, run through six different stacks — and an honest account of
 which ideas worked, which didn't, and what each one costs in latency, RAM and CPU.
 
+**Write-up** — [the full story, with the eight approaches that failed](https://huggingface.co/blog/dylantom2012/i-benchmarked-jev-against-open-cpu-only-stacks-it)
+
 **Artifacts** — [model (8 floats)](https://huggingface.co/dylantom2012/fly-head-potion-8m) ·
-[interactive results](https://huggingface.co/spaces/dylantom2012/open-system-one) ·
-[per-item predictions](https://huggingface.co/datasets/dylantom2012/open-system-one-bench)
+[per-item predictions](https://huggingface.co/datasets/dylantom2012/open-system-one-bench) ·
+[results explorer](https://huggingface.co/spaces/dylantom2012/open-system-one) ·
+[live demo](https://huggingface.co/spaces/dylantom2012/open-system-one-demo)
 
 中文版：[README.zh.md](README.zh.md) · 详细报告：[REPORT.md](out/REPORT.md)
 
