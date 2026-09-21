@@ -1,0 +1,31 @@
+{
+ "checkpoint": "english",
+ "n": 10000,
+ "errors": 0,
+ "head_max_len": 512,
+ "max_len": 1024,
+ "wall_s": 386.3,
+ "per_dataset": {
+  "sst2": {
+   "acc": 0.8652,
+   "n": 2500,
+   "lat_p50_ms": 19.4
+  },
+  "ag_news": {
+   "acc": 0.9392,
+   "n": 2500,
+   "lat_p50_ms": 25.8
+  },
+  "emotion": {
+   "acc": 0.582,
+   "n": 2500,
+   "lat_p50_ms": 21.8
+  },
+  "banking77": {
+   "acc": 0.5428,
+   "n": 2500,
+   "lat_p50_ms": 86.3
+  }
+ },
+ "overall_acc": 0.7323
+}

@@ -52,3 +52,21 @@ Jev 的延迟以本机到 Cloudflare 的网络往返为主。
 `cross_v2.py --model base --templates 1` 的输出（`cache/xc_base_*.npz`）。
 分析脚本（`fuse.py` / `distill.py` / `frontier.py`）两种命名都认。
 从零复现时统一用 `cross_v2.py` 即可。
+
+## Laya 相关的跑法
+
+```bash
+uv pip install --python .venv/bin/python laya
+USE_TF=0 .venv/bin/python laya_bench.py                    # 全量 10k，英文 checkpoint
+USE_TF=0 .venv/bin/python laya_shortlist.py banking77 20 2500   # 加我们的候选裁剪
+USE_TF=0 N=600 .venv/bin/python laya_zh.py multilingual    # 中文 TNEWS
+USE_TF=0 N=600 .venv/bin/python laya_zh.py english         # 中文对照（会崩）
+.venv/bin/python proper_vs_acc.py                          # ES 目标：准确率 vs 恰当评分
+```
+
+两个坑：
+
+- `transformers` 在 import 时会探测 TensorFlow，装了 TF 的机器上它的 abseil 运行时会把
+  模型构造卡死。**所有 laya 调用都要 `USE_TF=0`。**（这条是 Laya 官方文档写的，实测确实需要。）
+- `laya_bench.py` 把 `head_max_len` 从默认 192 抬到了 512。不抬的话 77 个选项每个只分到
+  3–4 token，测出来的是一个**已知的配置错误**而不是模型能力。官方文档明确说了这一点。

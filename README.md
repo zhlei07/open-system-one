@@ -125,6 +125,95 @@ The last row is the result we find most interesting: an 8M-parameter static embe
 whose entire parameter count is **eight floats**, reaching the accuracy of a cloud
 decision model at 0.1 ms and 82 MB. The head trains in 0.1 s.
 
+## Update — Laya, and a fourth architecture
+
+A week after Jev, [Laya](https://huggingface.co/convaiinnovations/laya) shipped: an
+Apache-2.0 System One model, ModernBERT-large + a decision head, 421M params. It answers
+every option in **one forward pass** by scoring each option at its own `[MASK]` token —
+the thing our cross-encoder cannot do, and the reason our latency scales with option count.
+
+We ran it through the same 10,000 items, same bare label names, same measurement discipline.
+**As far as we know this is the first time Laya and Jev have been measured on identical items.**
+(Laya's own README compares against third-party published Jev numbers on different samples
+and 72 vs 77 labels; our Jev column is directly measured.)
+
+| stack | sst2 | ag_news | emotion | banking77 | macro | p50 latency |
+|---|---|---|---|---|---|---|
+| `typesafe/jev` (enriched) | 91.6 % | 88.6 % | 59.0 % | 77.8 % | **79.3 %** | 381 ms |
+| Cross-encoder 149M (bare) | 85.5 % | 84.4 % | **76.2 %** | 68.8 % | **78.7 %** | 50–616 ms |
+| **Laya 421M (bare)** | 86.5 % | **93.9 %** | 58.2 % | 54.3 % | **73.2 %** | **19–86 ms** |
+| bi-encoder + head, 2k labels | 85.8 % | 89.5 % | 66.2 % | **88.8 %** | **82.6 %** | 15.8 ms |
+
+Three things fall out of this:
+
+**Laya wins AG News outright** — 93.9 %, 5.3 pp above Jev, at 26 ms on a laptop CPU. Its own
+README claims 0.950 there; we measure 0.939. Its published Emotion figure (0.595) matches our
+0.582. **Its self-reported numbers hold up**, which is worth saying plainly.
+
+**Its high-cardinality weakness is real, and we partially fixed it.** Laya's docs explain the
+failure honestly: 77 options share a fixed `head_max_len`, so each label gets 3–4 tokens and
+the texts stop being distinguishable. They recommend *"split large option sets into a two-step
+coarse-to-fine hierarchical choice"* — but do not implement it. We had independently built
+exactly that for our own cross-encoder, so we bolted it on:
+
+| BANKING77, 77 options | accuracy | p50 |
+|---|---|---|
+| Laya, all 77 options | 54.3 % | 86.3 ms |
+| **Laya + our zero-shot bi-encoder shortlist to top-20** | **60.8 %** | **39.8 ms** |
+| *(shortlist ceiling, recall@20)* | *97.8 %* | — |
+
+**+6.5 pp and latency cut in half.** Still 17 pp behind Jev on this task, so the token-budget
+problem is mitigated rather than solved — but the fix costs one cheap bi-encoder pass and is
+the only thing here that made both accuracy and latency better at once.
+
+**The three architectures fail in three different ways.** Bi-encoder: no interaction between
+text and option, so abstract labels kill it. Cross-encoder: one forward pass per option, so
+latency scales with cardinality. Single-pass option markers: all options share one token
+budget, so cardinality destroys accuracy instead of speed. There is no free lunch; pick the
+failure mode you can live with.
+
+## Update — the decision head's objective was wrong
+
+Laya is trained with RLCD against strictly proper scoring rules. That prompted us to look at
+our own objective, which was `0.7 × mean accuracy + 0.3 × worst-task accuracy` — a rule that
+gives **zero credit for reporting honest probabilities**. We swapped it for the log score,
+with the temperature optimised inside each evaluation.
+
+| ES objective | macro accuracy | mean ECE | mean NLL |
+|---|---|---|---|
+| accuracy (before) | 82.6 % | 0.018 | 0.490 |
+| **strictly proper (log score)** | **83.6 %** | 0.018 | **0.462** |
+
+The result is not what we expected. **Calibration did not move** (ECE 0.018 either way) —
+temperature scaling on a held-out dev split was already doing that job, so the missing
+calibration term had not actually been costing us anything. What improved was **accuracy**,
+by 1.0 pp, biggest on SST-2 (+1.8) and Emotion (+2.0).
+
+The explanation is about optimisation, not calibration: accuracy is a step function, so the
+(1+λ)-ES searches a landscape of plateaus. The log score is smooth and rewards margin, which
+gives an evolution strategy something like a gradient to follow. **We went looking for better
+probabilities and found a better search signal instead.**
+
+## Update — Chinese, and a confidence trap
+
+Laya ships a multilingual checkpoint (mmBERT-base, 322M, 100+ languages). Its own benchmarks
+cover MASSIVE and XNLI; we tested something it does not: **CLUE/TNEWS**, Chinese news-headline
+classification, 15 classes, 600 items.
+
+| checkpoint | accuracy | mean confidence | overconfidence gap | p50 |
+|---|---|---|---|---|
+| `laya-multilingual` | **39.2 %** | 0.756 | +0.365 | 14.3 ms |
+| `laya` (English root) | 22.5 % | **0.968** | **+0.743** | 42.5 ms |
+| *random* | *6.7 %* | — | — | — |
+
+The English checkpoint on Chinese is the dangerous case: **22.5 % right while 96.8 % confident.**
+This reproduces, in Chinese, the failure Laya documents for Khmer — *"the model stays confident
+while being wrong, so confidence gating cannot save you."* If you serve mixed-language traffic,
+route on script before the forward pass; do not rely on confidence thresholds to catch it.
+
+The multilingual checkpoint is usable — 6× random at 14 ms — but it is **also overconfident by
+0.365**. Fit your own temperature on your own data before trusting any probability it gives you.
+
 ## What did not work
 
 Eight ideas we tested and would otherwise have guessed were wins. These cost us a day;

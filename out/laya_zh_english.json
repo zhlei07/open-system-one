@@ -1,0 +1,11 @@
+{
+ "checkpoint": "english",
+ "dataset": "CLUE/TNEWS",
+ "n": 600,
+ "n_options": 15,
+ "acc": 0.225,
+ "random_baseline": 0.06666666666666667,
+ "mean_confidence": 0.9681070000000002,
+ "lat_p50_ms": 42.5,
+ "wall_s": 25.9
+}

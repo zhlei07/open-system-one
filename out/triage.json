@@ -1,0 +1,542 @@
+[
+ {
+  "sub": "r/AppleWatch",
+  "title": "Anyone Else Frustrated by the Lack of Explanations for health metrics?",
+  "snippet": "while I appreciate the extensive fitness and health metrics it provides, I'm increasingly frustrated",
+  "url": "/r/AppleWatch/comments/1f6hwy7/",
+  "label": "pain",
+  "conf": 0.9498345255851746,
+  "second": "doubt",
+  "scores": {
+   "pain": 0.95,
+   "rivals": 0.012,
+   "doubt": 0.013,
+   "buy": 0.007,
+   "price": 0.012,
+   "noise": 0.007
+  },
+  "value": 2.85
+ },
+ {
+  "sub": "r/AppleWatchFitness",
+  "title": "Does anyone else feel like Apple Health is great at collecting data but terrible at actually telling you anything?",
+  "snippet": "it just dumps all the data in charts without any real interpretation. What do you all use for ACTUAL insights?",
+  "url": "/r/AppleWatchFitness/comments/1pi4spg/",
+  "label": "pain",
+  "conf": 0.8199759125709534,
+  "second": "doubt",
+  "scores": {
+   "pain": 0.82,
+   "rivals": 0.01,
+   "doubt": 0.135,
+   "buy": 0.008,
+   "price": 0.006,
+   "noise": 0.021
+  },
+  "value": 2.46
+ },
+ {
+  "sub": "r/ios",
+  "title": "Does anyone else think paying monthly to use apps is ridiculous?",
+  "snippet": "The only apps that should charge recurringly are streaming services",
+  "url": "/r/ios/comments/1o5c8oy/",
+  "label": "price",
+  "conf": 0.9632838368415833,
+  "second": "doubt",
+  "scores": {
+   "pain": 0.004,
+   "rivals": 0.009,
+   "doubt": 0.009,
+   "buy": 0.007,
+   "price": 0.963,
+   "noise": 0.007
+  },
+  "value": 1.927
+ },
+ {
+  "sub": "r/nutrition",
+  "title": "Accuracy of bodyfat % on smart scales? Are trends reliable?",
+  "snippet": "My scale is telling me I've lost like 4 pounds of lean mass on a 500 calorie deficit whereas I very clearly was gaining a bit of muscle",
+  "url": "/r/nutrition/comments/1atizaf/",
+  "label": "doubt",
+  "conf": 0.9753552079200745,
+  "second": "pain",
+  "scores": {
+   "pain": 0.011,
+   "rivals": 0.006,
+   "doubt": 0.975,
+   "buy": 0.003,
+   "price": 0.001,
+   "noise": 0.003
+  },
+  "value": 1.756
+ },
+ {
+  "sub": "r/MacroFactor",
+  "title": "Truly Accurate Smart Scale?",
+  "snippet": "Are there any truly accurate smart scales out there that give accurate values other than weight such as body fat percentage lean body mass visceral fat",
+  "url": "/r/MacroFactor/comments/1d9r36k/",
+  "label": "doubt",
+  "conf": 0.9166041612625122,
+  "second": "rivals",
+  "scores": {
+   "pain": 0.008,
+   "rivals": 0.028,
+   "doubt": 0.917,
+   "buy": 0.027,
+   "price": 0.004,
+   "noise": 0.017
+  },
+  "value": 1.65
+ },
+ {
+  "sub": "r/AppleWatchFitness",
+  "title": "What are the best Fitness/Health Apps?",
+  "snippet": "Athlytic 26.99 per year or 3.49 per month. Expensive? Yes. But this is the best app I have come across by far that condenses all of the workout and health data",
+  "url": "/r/AppleWatchFitness/comments/199txuk/",
+  "label": "rivals",
+  "conf": 0.6361053586006165,
+  "second": "buy",
+  "scores": {
+   "pain": 0.01,
+   "rivals": 0.636,
+   "doubt": 0.011,
+   "buy": 0.325,
+   "price": 0.012,
+   "noise": 0.006
+  },
+  "value": 1.59
+ },
+ {
+  "sub": "r/AppleWatch",
+  "title": "Best app to view all of your health data",
+  "snippet": "I've tried a lot of health tracking apps and stuck with Sonar because I can directly sync my Oura MyFitnessPal and Apple Health data together",
+  "url": "/r/AppleWatch/comments/1t8blon/",
+  "label": "rivals",
+  "conf": 0.6315226554870605,
+  "second": "buy",
+  "scores": {
+   "pain": 0.013,
+   "rivals": 0.632,
+   "doubt": 0.063,
+   "buy": 0.258,
+   "price": 0.006,
+   "noise": 0.028
+  },
+  "value": 1.579
+ },
+ {
+  "sub": "r/loseit",
+  "title": "Is a body composition scale worth it?",
+  "snippet": "A scale that also measures body composition is like an extra 10-15 dollars",
+  "url": "/r/loseit/comments/1dn0nvl/",
+  "label": "doubt",
+  "conf": 0.8458377718925476,
+  "second": "buy",
+  "scores": {
+   "pain": 0.029,
+   "rivals": 0.045,
+   "doubt": 0.846,
+   "buy": 0.054,
+   "price": 0.012,
+   "noise": 0.014
+  },
+  "value": 1.523
+ },
+ {
+  "sub": "r/SingaporeFitness",
+  "title": "Almost one month progress update",
+  "snippet": "I would say to go with BMI as a general guide. Those weighing scales are notoriously inaccurate",
+  "url": "/r/SingaporeFitness/comments/1nhh8js/",
+  "label": "doubt",
+  "conf": 0.8396798968315125,
+  "second": "buy",
+  "scores": {
+   "pain": 0.04,
+   "rivals": 0.033,
+   "doubt": 0.84,
+   "buy": 0.057,
+   "price": 0.011,
+   "noise": 0.019
+  },
+  "value": 1.511
+ },
+ {
+  "sub": "r/selfimprovement",
+  "title": "Why is every wellness app a subscription?",
+  "snippet": "the subscriptions aren't even cheap. I would do it for 5 a month or at most 10. But I'm seeing 15 minimum on a ton of these",
+  "url": "/r/selfimprovement/comments/13nf2ua/",
+  "label": "price",
+  "conf": 0.7258750200271606,
+  "second": "pain",
+  "scores": {
+   "pain": 0.189,
+   "rivals": 0.039,
+   "doubt": 0.01,
+   "buy": 0.026,
+   "price": 0.726,
+   "noise": 0.01
+  },
+  "value": 1.452
+ },
+ {
+  "sub": "r/SingaporeFitness",
+  "title": "Body fat analysis",
+  "snippet": "DEXA is the most accurate method of measuring pbf among all the readily available tests. The cheaper alternative is BIA. Home scales are the",
+  "url": "/r/SingaporeFitness/comments/1mwv31n/",
+  "label": "doubt",
+  "conf": 0.791415810585022,
+  "second": "buy",
+  "scores": {
+   "pain": 0.012,
+   "rivals": 0.073,
+   "doubt": 0.791,
+   "buy": 0.096,
+   "price": 0.008,
+   "noise": 0.02
+  },
+  "value": 1.425
+ },
+ {
+  "sub": "r/AppleWatch",
+  "title": "Apple Watch health tracking features legit or a gimmick?",
+  "snippet": "I'm in my mid-40s and want to monitor my health vitals like sleep quality sleep apnea oxygen levels",
+  "url": "/r/AppleWatch/comments/1i9l8jb/",
+  "label": "pain",
+  "conf": 0.44711610674858093,
+  "second": "buy",
+  "scores": {
+   "pain": 0.447,
+   "rivals": 0.062,
+   "doubt": 0.105,
+   "buy": 0.296,
+   "price": 0.036,
+   "noise": 0.054
+  },
+  "value": 1.341
+ },
+ {
+  "sub": "r/QuantifiedSelf",
+  "title": "What is the best Smart Scale to measure body composition?",
+  "snippet": "99% of scales are useless for real body fat data, what matters there is consistency and over time evaluation. You will never get exact data, you will get confrontation data",
+  "url": "/r/QuantifiedSelf/comments/16bjz1h/",
+  "label": "doubt",
+  "conf": 0.7111896872520447,
+  "second": "rivals",
+  "scores": {
+   "pain": 0.082,
+   "rivals": 0.102,
+   "doubt": 0.711,
+   "buy": 0.06,
+   "price": 0.004,
+   "noise": 0.041
+  },
+  "value": 1.28
+ },
+ {
+  "sub": "r/loseit",
+  "title": "Scale Stuck at 150 Help",
+  "snippet": "I highly recommend getting a scale that tells you your muscle fat composition. You could be gaining muscle and still losing fat",
+  "url": "/r/loseit/comments/1wlqjo4/",
+  "label": "rivals",
+  "conf": 0.47573399543762207,
+  "second": "doubt",
+  "scores": {
+   "pain": 0.098,
+   "rivals": 0.476,
+   "doubt": 0.264,
+   "buy": 0.095,
+   "price": 0.026,
+   "noise": 0.041
+  },
+  "value": 1.189
+ },
+ {
+  "sub": "r/askSingapore",
+  "title": "Would you recommend having an Apple Watch in SG?",
+  "snippet": "Of all Apple products I have only iPhone iPad and AirPods Pro so I wouldn't say I'm really into the apple ecosystem",
+  "url": "/r/askSingapore/comments/1ei9ciz/",
+  "label": "buy",
+  "conf": 0.7886714339256287,
+  "second": "rivals",
+  "scores": {
+   "pain": 0.02,
+   "rivals": 0.092,
+   "doubt": 0.034,
+   "buy": 0.789,
+   "price": 0.017,
+   "noise": 0.048
+  },
+  "value": 1.183
+ },
+ {
+  "sub": "r/askSingapore",
+  "title": "Home weighing scale recommendation?",
+  "snippet": "does anybody have a recommendation for a weighing scale for home use? Ok with just simple weight but bonus if includes stuff like fat percent",
+  "url": "/r/askSingapore/comments/1oi0q3d/",
+  "label": "buy",
+  "conf": 0.7600777745246887,
+  "second": "rivals",
+  "scores": {
+   "pain": 0.02,
+   "rivals": 0.116,
+   "doubt": 0.069,
+   "buy": 0.76,
+   "price": 0.005,
+   "noise": 0.029
+  },
+  "value": 1.14
+ },
+ {
+  "sub": "r/askSingapore",
+  "title": "Anyone purchased Xiaomi Mijia S800 smart scale in Singapore?",
+  "snippet": "I understand it's a China-only model but there is gray import lazada",
+  "url": "/r/askSingapore/comments/1r6w3d0/",
+  "label": "buy",
+  "conf": 0.7496014833450317,
+  "second": "doubt",
+  "scores": {
+   "pain": 0.043,
+   "rivals": 0.065,
+   "doubt": 0.086,
+   "buy": 0.75,
+   "price": 0.015,
+   "noise": 0.042
+  },
+  "value": 1.124
+ },
+ {
+  "sub": "r/MacroFactor",
+  "title": "Smart Scale recommendation",
+  "snippet": "I would like to buy my first smart scale. I want to track my weights accurately and the progress of mostly the other stats",
+  "url": "/r/MacroFactor/comments/1o5ac70/",
+  "label": "buy",
+  "conf": 0.7203661203384399,
+  "second": "rivals",
+  "scores": {
+   "pain": 0.004,
+   "rivals": 0.189,
+   "doubt": 0.078,
+   "buy": 0.72,
+   "price": 0.002,
+   "noise": 0.007
+  },
+  "value": 1.081
+ },
+ {
+  "sub": "r/BuyItForLife",
+  "title": "Bathroom Scale for daily weight tracking",
+  "snippet": "I'll advocate for my Withings scale. I've had it for a while",
+  "url": "/r/BuyItForLife/comments/1ofpv09/",
+  "label": "rivals",
+  "conf": 0.4257603585720062,
+  "second": "doubt",
+  "scores": {
+   "pain": 0.047,
+   "rivals": 0.426,
+   "doubt": 0.24,
+   "buy": 0.24,
+   "price": 0.01,
+   "noise": 0.036
+  },
+  "value": 1.064
+ },
+ {
+  "sub": "r/loseit",
+  "title": "Thoughts on smart scales with hand-held attachment",
+  "snippet": "I've read that the ones that do not feature the handheld attachments really only measure your lower body",
+  "url": "/r/loseit/comments/1cwce6o/",
+  "label": "rivals",
+  "conf": 0.42131751775741577,
+  "second": "buy",
+  "scores": {
+   "pain": 0.081,
+   "rivals": 0.421,
+   "doubt": 0.162,
+   "buy": 0.22,
+   "price": 0.02,
+   "noise": 0.095
+  },
+  "value": 1.053
+ },
+ {
+  "sub": "r/AppleWatchFitness",
+  "title": "Do you guys actually use all the health data or just check the rings?",
+  "snippet": "I really only look at my rings and maybe steps. All the other stuff like heart rate variability",
+  "url": "/r/AppleWatchFitness/comments/1tc02v3/",
+  "label": "doubt",
+  "conf": 0.5700891017913818,
+  "second": "pain",
+  "scores": {
+   "pain": 0.266,
+   "rivals": 0.04,
+   "doubt": 0.57,
+   "buy": 0.052,
+   "price": 0.016,
+   "noise": 0.056
+  },
+  "value": 1.026
+ },
+ {
+  "sub": "r/AppleWatchFitness",
+  "title": "Do you actually do anything with your Apple Watch data?",
+  "snippet": "I track the usual stuff HRV sleep resting HR workouts. But outside of daily rings",
+  "url": "/r/AppleWatchFitness/comments/1q1wz51/",
+  "label": "pain",
+  "conf": 0.3388720452785492,
+  "second": "doubt",
+  "scores": {
+   "pain": 0.339,
+   "rivals": 0.08,
+   "doubt": 0.309,
+   "buy": 0.136,
+   "price": 0.03,
+   "noise": 0.107
+  },
+  "value": 1.017
+ },
+ {
+  "sub": "r/AppleWatch",
+  "title": "New Apple Watch owner here are app subscriptions actually worth it?",
+  "snippet": "For cheaper alternative to Bevel try Livity it is excellent. Athlytic also good",
+  "url": "/r/AppleWatch/comments/1nwfrl8/",
+  "label": "buy",
+  "conf": 0.5362715721130371,
+  "second": "rivals",
+  "scores": {
+   "pain": 0.015,
+   "rivals": 0.342,
+   "doubt": 0.027,
+   "buy": 0.536,
+   "price": 0.058,
+   "noise": 0.022
+  },
+  "value": 0.804
+ },
+ {
+  "sub": "r/PHitness",
+  "title": "What brand of weighing scale do you recommend?",
+  "snippet": "I use an omron digital scale i find it accurate based on the weight of a standard item",
+  "url": "/r/PHitness/comments/1ldwaw3/",
+  "label": "doubt",
+  "conf": 0.440708190202713,
+  "second": "buy",
+  "scores": {
+   "pain": 0.01,
+   "rivals": 0.241,
+   "doubt": 0.441,
+   "buy": 0.269,
+   "price": 0.006,
+   "noise": 0.034
+  },
+  "value": 0.793
+ },
+ {
+  "sub": "r/loseit",
+  "title": "Body composition scale recommendations?",
+  "snippet": "searching for a body comp scale with as much solid proven accuracy as I can find under 100 USD. I get an InBody scan every 12 weeks",
+  "url": "/r/loseit/comments/r2fcaa/",
+  "label": "doubt",
+  "conf": 0.41062065958976746,
+  "second": "rivals",
+  "scores": {
+   "pain": 0.005,
+   "rivals": 0.291,
+   "doubt": 0.411,
+   "buy": 0.289,
+   "price": 0.002,
+   "noise": 0.003
+  },
+  "value": 0.739
+ },
+ {
+  "sub": "r/ios",
+  "title": "Which apps do you find valuable enough to pay a monthly or yearly subscription?",
+  "snippet": "There are other apps that I paid a one-time fee once upon a time and that I frequently use",
+  "url": "/r/ios/comments/1nyqvq6/",
+  "label": "buy",
+  "conf": 0.42155376076698303,
+  "second": "rivals",
+  "scores": {
+   "pain": 0.028,
+   "rivals": 0.379,
+   "doubt": 0.033,
+   "buy": 0.422,
+   "price": 0.043,
+   "noise": 0.095
+  },
+  "value": 0.632
+ },
+ {
+  "sub": "r/AppStoreOptimization",
+  "title": "Is it worth doing cheap monthly subscriptions?",
+  "snippet": "3.99 per month 4.99 per week with a 3-day free trial and 49.90 per year without a free trial. The weekly plan is ultimately much more expensive",
+  "url": "/r/AppStoreOptimization/comments/1r02p9o/",
+  "label": "price",
+  "conf": 0.30952298641204834,
+  "second": "buy",
+  "scores": {
+   "pain": 0.08,
+   "rivals": 0.126,
+   "doubt": 0.11,
+   "buy": 0.284,
+   "price": 0.31,
+   "noise": 0.091
+  },
+  "value": 0.619
+ },
+ {
+  "sub": "r/iphone",
+  "title": "For which apps you have no problem paying a subscription fee?",
+  "snippet": "This can get quite expensive very quickly which is why there is a subscription",
+  "url": "/r/iphone/comments/1b9aks3/",
+  "label": "buy",
+  "conf": 0.38569146394729614,
+  "second": "price",
+  "scores": {
+   "pain": 0.039,
+   "rivals": 0.208,
+   "doubt": 0.06,
+   "buy": 0.386,
+   "price": 0.218,
+   "noise": 0.089
+  },
+  "value": 0.579
+ },
+ {
+  "sub": "r/privacy",
+  "title": "Is the apple watch and apple health app a privacy risk?",
+  "snippet": "I've delved quite a bit into my privacy. While I take some cuts for convenience",
+  "url": "/r/privacy/comments/1pbxkqw/",
+  "label": "buy",
+  "conf": 0.3116813898086548,
+  "second": "doubt",
+  "scores": {
+   "pain": 0.116,
+   "rivals": 0.159,
+   "doubt": 0.164,
+   "buy": 0.312,
+   "price": 0.101,
+   "noise": 0.147
+  },
+  "value": 0.468
+ },
+ {
+  "sub": "r/smallbusiness",
+  "title": "How to promote your business on reddit without directly advertising",
+  "snippet": "how do you guys advertise your business products here without violating the rules against self-promotion",
+  "url": "/r/smallbusiness/comments/1l1ukby/",
+  "label": "noise",
+  "conf": 0.30458325147628784,
+  "second": "buy",
+  "scores": {
+   "pain": 0.072,
+   "rivals": 0.185,
+   "doubt": 0.142,
+   "buy": 0.216,
+   "price": 0.081,
+   "noise": 0.305
+  },
+  "value": 0.0
+ }
+]

@@ -141,7 +141,8 @@ def objective(accs: list[float]) -> float:
 
 def search_weights(banks: dict[str, tuple[np.ndarray, np.ndarray]], dim: int,
                    generations: int = 80, lam: int = 14, restarts: int = 24,
-                   seed: int = 7, verbose: bool = False) -> tuple[np.ndarray, list[dict]]:
+                   seed: int = 7, verbose: bool = False,
+                   objective_mode: str = "acc") -> tuple[np.ndarray, list[dict]]:
     """(1+λ)-ES + σ 重启。参数与 optimize.py 完全一致。
 
     banks: {数据集名: (特征张量, 标签)}，每个数据集算一个"任务"，
@@ -150,8 +151,12 @@ def search_weights(banks: dict[str, tuple[np.ndarray, np.ndarray]], dim: int,
     rng = random.Random(seed)
     names = list(banks)
 
+    # "acc"    —— 原目标：只奖准确率，对概率诚实与否零奖励
+    # "proper" —— 严格恰当评分规则（对数分，温度就地最优化）
+    score_fn = accuracy if objective_mode == "acc" else proper_score
+
     def evaluate(w):
-        return objective([accuracy(banks[n][0], w, banks[n][1]) for n in names])
+        return objective([score_fn(banks[n][0], w, banks[n][1]) for n in names])
 
     starts = [np.array([rng.uniform(0, 2) if i < dim * 0.75 else rng.uniform(-0.5, 1.0)
                         for i in range(dim)], np.float32) for _ in range(restarts)]
@@ -176,6 +181,45 @@ def search_weights(banks: dict[str, tuple[np.ndarray, np.ndarray]], dim: int,
         if verbose and gen % 20 == 0:
             print(f"    gen {gen:3d} σ={sigma:.3f} obj={best_obj:.4f}")
     return best_w, history
+
+
+# ---------------- 严格恰当评分规则 ----------------
+# 借鉴 Laya 的 RLCD：只有诚实报告概率才能最大化期望奖励。
+#
+# 我们原来的 ES 目标是 0.7*均值准确率 + 0.3*最差准确率 —— 它**只奖 argmax 对不对，
+# 对概率是否诚实零奖励**。也就是说我们一整天报的 ECE 和概率分布，
+# 其优化目标里根本没有校准项。这是设计缺陷，不是调参问题。
+#
+# 对数分是严格恰当的：期望分数只在报告真实概率时最大。
+# 温度是概率的一部分，所以必须在每次评估里就地拟合，不能事后补。
+
+_T_GRID_FAST = np.geomspace(0.5, 200, 20)     # ES 内部：够用即可
+_T_GRID_FINE = np.geomspace(0.5, 200, 80)     # 定稿时再精拟
+
+
+def _nll(s: np.ndarray, y: np.ndarray, t: float) -> float:
+    z = s * t
+    z = z - z.max(axis=1, keepdims=True)
+    logp = z - np.log(np.exp(z).sum(axis=1, keepdims=True))
+    return float(-logp[np.arange(len(y)), y].mean())
+
+
+def best_temperature(s: np.ndarray, y: np.ndarray, fine: bool = False) -> tuple[float, float]:
+    """在一维网格上找最小 NLL 的温度。返回 (温度, NLL)。"""
+    grid = _T_GRID_FINE if fine else _T_GRID_FAST
+    nlls = [_nll(s, y, float(t)) for t in grid]
+    i = int(np.argmin(nlls))
+    return float(grid[i]), nlls[i]
+
+
+def proper_score(feat: np.ndarray, w: np.ndarray, y: np.ndarray) -> float:
+    """这组权重在最优温度下能达到的对数分（越大越好）。
+
+    注意这里对温度取最优，而不是固定温度：温度是可以事后调的自由参数，
+    把它一起优化掉，目标才真正衡量"这组权重承载了多少可校准的信息"。
+    """
+    _, nll = best_temperature(scores(feat, w), y)
+    return -nll
 
 
 def fit_temperature(feat: np.ndarray, w: np.ndarray, y: np.ndarray) -> float:
