@@ -120,3 +120,66 @@ def describe(ds: str, options: list[str], enriched: bool) -> list[str]:
     if missing:
         raise KeyError(f"{ds} 缺少描述: {missing}")
     return [m[o] for o in options]
+
+
+# ---------------- 用例的丰富描述 ----------------
+#
+# 为什么补这个：README 里测出来"把短标签换成一句话描述"对双塔值 +13.7pp（AG News），
+# 而 5 个用例**全部在用裸标签**。DBpedia 的类名尤其糟——"Mean Of Transportation"、
+# "Natural Place"、"Written Work" 是本体论术语，抽象且极简，正是 AG News 那个
+# "World/Sports/Business/Sci-Tech 对点积几乎零信号"的同款病。
+# 用例里 DBpedia 差 Jev 11.0pp，是所有用例中最大的缺口。
+#
+# 纪律不变：描述写的是标签的含义，不含任何来自标注数据的信息。
+# CLINC 路由的 150 个意图没有手写描述——量太大，模板化生成的质量还不如裸标签。
+USECASE_ENRICHED = {
+"moderation": {
+ "an acceptable message": "An ordinary message with no insults, slurs, threats or abuse.",
+ "an offensive or abusive message": "A message containing insults, slurs, harassment, threats or abusive language.",
+},
+"guardrail": {
+ "a request the assistant is designed to handle":
+   "The user asks for one of the assistant's supported services, such as banking, travel, "
+   "reminders, food ordering, device control or account settings.",
+ "a request outside the assistant's scope":
+   "The user asks something unrelated to any assistant service, such as personal opinions, "
+   "general trivia, philosophical questions or nonsense.",
+},
+"scoring": {
+ "very negative": "An extremely negative review: the writer strongly disliked the film.",
+ "negative": "A mildly negative review: the writer was unimpressed or critical.",
+ "neutral": "A mixed or neutral review: neither clearly positive nor clearly negative.",
+ "positive": "A mildly positive review: the writer liked the film, with some reservations.",
+ "very positive": "An extremely positive review: the writer praised the film enthusiastically.",
+},
+"labeling": {
+ "company": "A business organisation: a corporation, firm, manufacturer, airline, bank or brand.",
+ "educational institution": "A place of education: a school, college, university, academy or institute.",
+ "artist": "A person who creates or performs art: a musician, singer, painter, writer or actor.",
+ "athlete": "A person who competes in sport: a footballer, runner, boxer, cricketer or other sportsperson.",
+ "office holder": "A person holding public office: a politician, minister, senator, governor, judge or official.",
+ "mean of transportation": "A vehicle or craft: a car, ship, aircraft, locomotive, bus or spacecraft.",
+ "building": "A constructed structure: a house, church, castle, tower, bridge, hotel or stadium.",
+ "natural place": "A natural geographic feature: a river, mountain, lake, island, valley or forest.",
+ "village": "A human settlement: a village, town, hamlet or populated place, often with population figures.",
+ "animal": "A species or breed of animal: a mammal, bird, fish, insect, reptile or mollusc.",
+ "plant": "A species of plant: a flower, tree, shrub, grass, fungus, herb or orchid.",
+ "album": "A music release: an album, record, EP or soundtrack by a musician or band.",
+ "film": "A motion picture: a film or movie, with a director, cast and release year.",
+ "written work": "A written publication: a book, novel, magazine, journal, newspaper or comic.",
+},
+}
+
+
+def describe_usecase(key: str, options: list[str], enriched: bool) -> list[str] | None:
+    """用例的选项文字。没有手写描述的用例（如 150 意图的 CLINC 路由）返回 None，
+    调用方据此退回裸标签——**不要静默用半套描述**，那样比较的就不是同一件事了。"""
+    if not enriched:
+        return list(options)
+    m = USECASE_ENRICHED.get(key)
+    if not m:
+        return None
+    missing = [o for o in options if o not in m]
+    if missing:
+        raise KeyError(f"{key} 缺少描述: {missing}")
+    return [m[o] for o in options]

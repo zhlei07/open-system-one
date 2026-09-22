@@ -69,12 +69,16 @@ def build_usecases(n: int = N_DEFAULT) -> dict[str, UseCase]:
     oos = clinc.filter(lambda r: r["intent"] == oos_id)
     half = n // 2
     a, b = _take(ins, half, SEED + 1), _take(oos, half, SEED + 2)
+    # 两半必须打散后再拼：直接拼接会让"前 100 条做校准"取到清一色域内样本，
+    # 校准集退化成单一类别，温度和融合权重都白标定。这个坑踩过一次。
+    gt = [(t["text"], 0) for t in a] + [(t["text"], 1) for t in b]
+    _rng = __import__("random").Random(SEED)
+    _rng.shuffle(gt)
     out["guardrail"] = UseCase(
         "guardrail", "Agent 护栏 / 域外拦截", "Noul", "clinc/clinc_oos:plus (in vs oos)",
         options=["a request the assistant is designed to handle",
                  "a request outside the assistant's scope"],
-        texts=[r["text"] for r in a] + [r["text"] for r in b],
-        gold=[0] * len(a) + [1] * len(b))
+        texts=[t for t, _ in gt], gold=[g for _, g in gt])
 
     # 4. 优先级 / 质量评分 —— 序数，Jev 自己承认这是它最弱的一类
     d = _take(load_dataset("SetFit/sst5", split="test"), n)
