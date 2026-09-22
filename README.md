@@ -317,6 +317,43 @@ Fusion itself is worth having: on the guardrail case the two backends score 52.5
 rule fell back to a single backend and threw those 4 points away. `Ensemble.calibrate()`
 now fits temperature only; `fit_weights=True` restores the old behaviour for comparison.
 
+## Update — enriched option descriptions, tested on the use cases
+
+We published "+13.7 pp on AG News from writing label descriptions as sentences" and never
+applied it to the five use cases, all of which still ran on bare labels. DBpedia's classes
+(`Mean Of Transportation`, `Natural Place`, `Written Work`) looked like the same disease,
+and that case was our largest gap to Jev (−11.0 pp). It was not the same disease.
+
+| use case | options | cross bare → rich | Laya bare → rich | fused bare → rich |
+|---|---|---|---|---|
+| moderation | 2 | 81.2 → 78.5 (−2.8) | 83.8 → 83.0 (−0.8) | 84.2 → 83.0 (−1.2) |
+| guardrail | 2 | 52.5 → **57.5 (+5.0)** | 53.0 → 56.0 (+3.0) | 57.0 → 57.0 (0.0) |
+| scoring (SST-5) | 5 | 41.2 → 33.2 (−8.0) | 44.2 → 40.2 (−4.0) | 45.8 → **47.8 (+2.0)** |
+| labeling (DBpedia) | 14 | 75.5 → **81.0 (+5.5)** | 86.5 → 81.2 (−5.2) | 87.5 → 85.2 (−2.2) |
+| macro | | 62.6 → 62.6 (−0.1) | 66.9 → 65.1 (−1.8) | 68.6 → 68.2 (−0.4) |
+
+The +13.7 pp was a **bi-encoder** result: a dot product cannot expand a label's meaning, so
+writing it as a sentence adds real signal. The same table already records **−4.3 pp** for the
+cross-encoder. The use cases run on a cross-encoder and Laya, so extrapolating from the
+bi-encoder number was the wrong reading of our own data.
+
+What the four cases do show cleanly is that **the gain tracks how much the bare label leaves
+unsaid**: guardrail +5.0 (the bare option never said what the assistant actually does),
+DBpedia on the cross-encoder +5.5 (ontology terms are abstract), moderation −2.8 (the bare
+labels were already unambiguous), SST-5 −8.0 (`very negative` is already the plainest
+possible phrasing; a longer sentence is pure noise).
+
+**The one result worth keeping.** On the guardrail case all three local stacks previously sat
+on the majority baseline (51.2 %) and we described the task as "both sides are about
+coin-flipping". With descriptions that say what the assistant handles, the cross-encoder
+reaches 57.5 %, 6.3 points above the baseline. The model was not failing to read a capability
+boundary; we had never told it where the boundary was.
+
+Descriptions live in `descriptions.py::USECASE_ENRICHED`; run with `RICH=1`. CLINC routing has
+no hand-written descriptions — 150 intents is too many to write well, and templated ones are
+worse than the bare labels. Jev was measured on bare labels only, so its column is not
+comparable under this condition.
+
 ## What did not work
 
 Eleven ideas we tested and would otherwise have guessed were wins. These cost us a day;

@@ -1,0 +1,210 @@
+{
+ "moderation": {
+  "jev_usecase": "内容审核 / 安全门",
+  "primitive": "Noul",
+  "source": "cardiffnlp/tweet_eval:offensive",
+  "n_options": 2,
+  "n_eval": 400,
+  "n_cal": 100,
+  "majority_baseline": 0.725,
+  "random_baseline": 0.5,
+  "prefilters": {
+   "cross": "static",
+   "laya": "mbert-embed"
+  },
+  "stacks": {
+   "cross": {
+    "acc": 0.785,
+    "fails": 0,
+    "lat_p50_ms": 138.2,
+    "lat_p95_ms": 233.2
+   },
+   "laya": {
+    "acc": 0.83,
+    "fails": 0,
+    "lat_p50_ms": 24.5,
+    "lat_p95_ms": 30.6
+   },
+   "fused": {
+    "acc": 0.83,
+    "fails": 0,
+    "lat_p50_ms": 174.3,
+    "lat_p95_ms": 287.4
+   }
+  },
+  "enriched": true,
+  "fused_calibration": {
+   "n": 100,
+   "temps": {
+    "cross": 1.9343597285950893,
+    "laya": 0.6219903099880398
+   },
+   "weights": {
+    "cross": 0.5,
+    "laya": 0.5
+   },
+   "fit_acc": 0.82,
+   "per_backend_acc": {
+    "cross": 0.8,
+    "laya": 0.77
+   },
+   "fit_weights": false
+  }
+ },
+ "guardrail": {
+  "jev_usecase": "Agent 护栏 / 域外拦截",
+  "primitive": "Noul",
+  "source": "clinc/clinc_oos:plus (in vs oos)",
+  "n_options": 2,
+  "n_eval": 400,
+  "n_cal": 100,
+  "majority_baseline": 0.5125,
+  "random_baseline": 0.5,
+  "prefilters": {
+   "cross": "static",
+   "laya": "mbert-embed"
+  },
+  "stacks": {
+   "cross": {
+    "acc": 0.575,
+    "fails": 0,
+    "lat_p50_ms": 108.2,
+    "lat_p95_ms": 128.7
+   },
+   "laya": {
+    "acc": 0.56,
+    "fails": 0,
+    "lat_p50_ms": 24.1,
+    "lat_p95_ms": 26.1
+   },
+   "fused": {
+    "acc": 0.57,
+    "fails": 0,
+    "lat_p50_ms": 135.0,
+    "lat_p95_ms": 160.6
+   }
+  },
+  "enriched": true,
+  "fused_calibration": {
+   "n": 100,
+   "temps": {
+    "cross": 20.0,
+    "laya": 1.9343597285950893
+   },
+   "weights": {
+    "cross": 0.5,
+    "laya": 0.5
+   },
+   "fit_acc": 0.57,
+   "per_backend_acc": {
+    "cross": 0.47,
+    "laya": 0.58
+   },
+   "fit_weights": false
+  }
+ },
+ "scoring": {
+  "jev_usecase": "优先级 / 质量评分",
+  "primitive": "Score",
+  "source": "SetFit/sst5",
+  "n_options": 5,
+  "n_eval": 400,
+  "n_cal": 100,
+  "majority_baseline": 0.2925,
+  "random_baseline": 0.2,
+  "prefilters": {
+   "cross": "static",
+   "laya": "mbert-embed"
+  },
+  "stacks": {
+   "cross": {
+    "acc": 0.3325,
+    "fails": 0,
+    "lat_p50_ms": 257.2,
+    "lat_p95_ms": 396.4
+   },
+   "laya": {
+    "acc": 0.4025,
+    "fails": 0,
+    "lat_p50_ms": 27.3,
+    "lat_p95_ms": 31.7
+   },
+   "fused": {
+    "acc": 0.4775,
+    "fails": 0,
+    "lat_p50_ms": 282.7,
+    "lat_p95_ms": 421.7
+   }
+  },
+  "enriched": true,
+  "fused_calibration": {
+   "n": 100,
+   "temps": {
+    "cross": 2.887023277455837,
+    "laya": 1.8094714484698597
+   },
+   "weights": {
+    "cross": 0.5,
+    "laya": 0.5
+   },
+   "fit_acc": 0.41,
+   "per_backend_acc": {
+    "cross": 0.29,
+    "laya": 0.4
+   },
+   "fit_weights": false
+  }
+ },
+ "labeling": {
+  "jev_usecase": "批量打标 / 筛选",
+  "primitive": "Choice",
+  "source": "fancyzhx/dbpedia_14",
+  "n_options": 14,
+  "n_eval": 400,
+  "n_cal": 100,
+  "majority_baseline": 0.095,
+  "random_baseline": 0.0714,
+  "prefilters": {
+   "cross": "static",
+   "laya": "mbert-embed"
+  },
+  "stacks": {
+   "cross": {
+    "acc": 0.81,
+    "fails": 0,
+    "lat_p50_ms": 1890.0,
+    "lat_p95_ms": 2952.1
+   },
+   "laya": {
+    "acc": 0.8125,
+    "fails": 0,
+    "lat_p50_ms": 78.9,
+    "lat_p95_ms": 92.2
+   },
+   "fused": {
+    "acc": 0.8525,
+    "fails": 0,
+    "lat_p50_ms": 2014.1,
+    "lat_p95_ms": 3057.4
+   }
+  },
+  "enriched": true,
+  "fused_calibration": {
+   "n": 100,
+   "temps": {
+    "cross": 0.47625723895311756,
+    "laya": 6.4309683539554126
+   },
+   "weights": {
+    "cross": 0.5,
+    "laya": 0.5
+   },
+   "fit_acc": 0.86,
+   "per_backend_acc": {
+    "cross": 0.84,
+    "laya": 0.77
+   },
+   "fit_weights": false
+  }
+ }
+}
