@@ -1,0 +1,23 @@
+{
+ "n_eval": 400,
+ "n_pool": 500,
+ "k": 20,
+ "n_options": 150,
+ "lat_p50_ms": 723.9,
+ "arms": {
+  "static": {
+   "recall_at_20": 0.92,
+   "acc": 0.59,
+   "acc_centered": 0.645,
+   "delta_pp": 5.500000000000005,
+   "col_seen": 150
+  },
+  "mbert": {
+   "recall_at_20": 0.975,
+   "acc": 0.605,
+   "acc_centered": 0.6375,
+   "delta_pp": 3.2499999999999973,
+   "col_seen": 150
+  }
+ }
+}

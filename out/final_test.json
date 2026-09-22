@@ -1,0 +1,46 @@
+{
+ "sst2": {
+  "n": 2500,
+  "n_options": 2,
+  "recall_at_k": 1.0,
+  "centering_on": false,
+  "acc_no_centering": 0.8372,
+  "acc_gated": 0.8372,
+  "delta_pp": 0.0,
+  "lat_p50_ms": 48.9,
+  "wall_s": 147.5
+ },
+ "ag_news": {
+  "n": 2500,
+  "n_options": 4,
+  "recall_at_k": 1.0,
+  "centering_on": false,
+  "acc_no_centering": 0.8408,
+  "acc_gated": 0.8408,
+  "delta_pp": 0.0,
+  "lat_p50_ms": 325.1,
+  "wall_s": 846.2
+ },
+ "emotion": {
+  "n": 2500,
+  "n_options": 6,
+  "recall_at_k": 1.0,
+  "centering_on": false,
+  "acc_no_centering": 0.7756,
+  "acc_gated": 0.7756,
+  "delta_pp": 0.0,
+  "lat_p50_ms": 212.3,
+  "wall_s": 579.3
+ },
+ "banking77": {
+  "n": 2500,
+  "n_options": 77,
+  "recall_at_k": 0.9752,
+  "centering_on": true,
+  "acc_no_centering": 0.6852,
+  "acc_gated": 0.7076,
+  "delta_pp": 2.2399999999999975,
+  "lat_p50_ms": 659.5,
+  "wall_s": 1795.1
+ }
+}

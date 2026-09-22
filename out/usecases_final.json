@@ -1,0 +1,227 @@
+{
+ "moderation": {
+  "n_options": 2,
+  "n_fresh": 353,
+  "majority_baseline": 0.728,
+  "prefilters": {
+   "cross": "static",
+   "laya": "mbert-embed"
+  },
+  "jev": null,
+  "jev_note": "未在此样本上测量（本次无 Jev 凭证）",
+  "stacks": {
+   "cross": {
+    "acc": 0.8101983002832861,
+    "lat_p50_ms": 118.9,
+    "lat_p95_ms": 218.5
+   },
+   "laya": {
+    "acc": 0.8186968838526912,
+    "lat_p50_ms": 22.2,
+    "lat_p95_ms": 27.3
+   },
+   "fused": {
+    "acc": 0.830028328611898,
+    "lat_p50_ms": 152.4,
+    "lat_p95_ms": 266.5
+   }
+  },
+  "fused_calibration": {
+   "n": 100,
+   "temps": {
+    "cross": 1.385510131225878,
+    "laya": 0.5091281347720831
+   },
+   "weights": {
+    "cross": 0.5,
+    "laya": 0.5
+   },
+   "fit_acc": 0.87,
+   "per_backend_acc": {
+    "cross": 0.85,
+    "laya": 0.81
+   },
+   "fit_weights": false
+  }
+ },
+ "routing": {
+  "n_options": 150,
+  "n_fresh": 400,
+  "majority_baseline": 0.015,
+  "prefilters": {
+   "cross": "static",
+   "laya": "mbert-embed"
+  },
+  "jev": null,
+  "jev_note": "未在此样本上测量（本次无 Jev 凭证）",
+  "stacks": {
+   "cross": {
+    "acc": 0.6225,
+    "lat_p50_ms": 476.3,
+    "lat_p95_ms": 683.8
+   },
+   "laya": {
+    "acc": 0.8625,
+    "lat_p50_ms": 49.2,
+    "lat_p95_ms": 55.2
+   },
+   "fused": {
+    "acc": 0.865,
+    "lat_p50_ms": 533.6,
+    "lat_p95_ms": 727.6
+   }
+  },
+  "fused_calibration": {
+   "n": 100,
+   "temps": {
+    "cross": 1.9343597285950893,
+    "laya": 3.7704424340817435
+   },
+   "weights": {
+    "cross": 0.5,
+    "laya": 0.5
+   },
+   "fit_acc": 0.9,
+   "per_backend_acc": {
+    "cross": 0.68,
+    "laya": 0.89
+   },
+   "fit_weights": false
+  }
+ },
+ "guardrail": {
+  "n_options": 2,
+  "n_fresh": 400,
+  "majority_baseline": 0.5025,
+  "prefilters": {
+   "cross": "static",
+   "laya": "mbert-embed"
+  },
+  "jev": null,
+  "jev_note": "未在此样本上测量（本次无 Jev 凭证）",
+  "stacks": {
+   "cross": {
+    "acc": 0.5025,
+    "lat_p50_ms": 67.4,
+    "lat_p95_ms": 84.3
+   },
+   "laya": {
+    "acc": 0.545,
+    "lat_p50_ms": 19.9,
+    "lat_p95_ms": 23.2
+   },
+   "fused": {
+    "acc": 0.53,
+    "lat_p50_ms": 92.6,
+    "lat_p95_ms": 115.1
+   }
+  },
+  "fused_calibration": {
+   "n": 100,
+   "temps": {
+    "cross": 20.0,
+    "laya": 1.6926463441242283
+   },
+   "weights": {
+    "cross": 0.5,
+    "laya": 0.5
+   },
+   "fit_acc": 0.55,
+   "per_backend_acc": {
+    "cross": 0.47,
+    "laya": 0.55
+   },
+   "fit_weights": false
+  }
+ },
+ "scoring": {
+  "n_options": 5,
+  "n_fresh": 400,
+  "majority_baseline": 0.24,
+  "prefilters": {
+   "cross": "static",
+   "laya": "mbert-embed"
+  },
+  "jev": null,
+  "jev_note": "未在此样本上测量（本次无 Jev 凭证）",
+  "stacks": {
+   "cross": {
+    "acc": 0.37,
+    "lat_p50_ms": 197.6,
+    "lat_p95_ms": 325.1
+   },
+   "laya": {
+    "acc": 0.445,
+    "lat_p50_ms": 22.0,
+    "lat_p95_ms": 25.5
+   },
+   "fused": {
+    "acc": 0.4675,
+    "lat_p50_ms": 230.3,
+    "lat_p95_ms": 356.1
+   }
+  },
+  "fused_calibration": {
+   "n": 100,
+   "temps": {
+    "cross": 1.583363831852602,
+    "laya": 1.1341047882762345
+   },
+   "weights": {
+    "cross": 0.5,
+    "laya": 0.5
+   },
+   "fit_acc": 0.52,
+   "per_backend_acc": {
+    "cross": 0.49,
+    "laya": 0.46
+   },
+   "fit_weights": false
+  }
+ },
+ "labeling": {
+  "n_options": 14,
+  "n_fresh": 400,
+  "majority_baseline": 0.09,
+  "prefilters": {
+   "cross": "static",
+   "laya": "mbert-embed"
+  },
+  "jev": null,
+  "jev_note": "未在此样本上测量（本次无 Jev 凭证）",
+  "stacks": {
+   "cross": {
+    "acc": 0.7675,
+    "lat_p50_ms": 1503.8,
+    "lat_p95_ms": 2482.8
+   },
+   "laya": {
+    "acc": 0.855,
+    "lat_p50_ms": 34.3,
+    "lat_p95_ms": 44.0
+   },
+   "fused": {
+    "acc": 0.875,
+    "lat_p50_ms": 1674.9,
+    "lat_p95_ms": 2826.4
+   }
+  },
+  "fused_calibration": {
+   "n": 100,
+   "temps": {
+    "cross": 0.812317197675396,
+    "laya": 5.264048121409756
+   },
+   "weights": {
+    "cross": 0.5,
+    "laya": 0.5
+   },
+   "fit_acc": 0.91,
+   "per_backend_acc": {
+    "cross": 0.68,
+    "laya": 0.89
+   },
+   "fit_weights": false
+  }
+ }
+}

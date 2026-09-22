@@ -1,0 +1,15 @@
+{
+ "n": 400,
+ "k": 20,
+ "device": "mps",
+ "static": {
+  "acc": 0.845,
+  "ceiling_recall": 0.92,
+  "lat_p50_ms": 31.4
+ },
+ "mbert-embed": {
+  "acc": 0.8775,
+  "ceiling_recall": 0.975,
+  "lat_p50_ms": 30.9
+ }
+}

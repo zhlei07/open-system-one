@@ -1,0 +1,21 @@
+{
+ "dataset": "banking77",
+ "n": 200,
+ "k": 12,
+ "device": "cpu",
+ "threads": 6,
+ "ceiling_recall": 0.945,
+ "acc_cached_independent_top20": 0.7,
+ "acc_independent_top12": 0.71,
+ "acc_pairwise_top12": 0.675,
+ "acc_flip_top2": 0.635,
+ "delta_pairwise_pp": -3.5000000000000004,
+ "delta_flip_pp": -7.5,
+ "ind_only": 14,
+ "pair_only": 7,
+ "both_right": 128,
+ "lat_p50_ms": 6499.0,
+ "wall_s": 1406.1,
+ "hypothesis_indep": "This example is about {}.",
+ "hypothesis_pair": "This text is about {} rather than {}."
+}

@@ -1,0 +1,10 @@
+{
+ "dataset": "banking77",
+ "topk": 8,
+ "n": 2500,
+ "ceiling_recall": 0.9028,
+ "device": "mps",
+ "acc": 0.6348,
+ "lat_p50_ms": 24.3,
+ "wall_s": 61.7
+}
