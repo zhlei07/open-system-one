@@ -230,9 +230,96 @@ route on script before the forward pass; do not rely on confidence thresholds to
 The multilingual checkpoint is usable — 6× random at 14 ms — but it is **also overconfident by
 0.365**. Fit your own temperature on your own data before trusting any probability it gives you.
 
+## Update — column-centering, gated by option count
+
+We published "column-centering the NLI scores: **0.0 pp** macro" as a dead end. That verdict
+was correct *on the macro average* and wrong as a conclusion. The per-task numbers were
++2.6 on BANKING77 and −3.1 on Emotion; averaging them to zero threw away the signal.
+
+Centering fixes **hubness** — some label words are similar to everything (`card payment`
+in BANKING77, `change speed` in CLINC) and absorb queries indiscriminately. Hubness grows
+with the number of options. So the gate looks at **option count only**, never the dataset
+name:
+
+| options | task | Δ from centering |
+|---|---|---|
+| 2 | SST-2 | −0.18 pp |
+| 4 | AG News | +0.04 pp |
+| 6 | Emotion | −3.34 pp |
+| **77** | **BANKING77** | **+2.30 pp** |
+| **150** | **CLINC routing** | **+3.25 to +5.50 pp** |
+
+Monotone in option count, positive on both high-cardinality tasks, ≤0 on all three
+low-cardinality ones. CLINC is independent evidence: it is not one of the four benchmark
+datasets and played no part in choosing the gate.
+
+**Making it inductive.** `fly_head`'s column-centering is *transductive*: it takes the
+column mean over the current batch of queries. With a single request that batch is one row,
+the mean is the score itself, and the term is identically zero — no gain online. We refit
+the column means **offline from an unlabeled pool** (the `fit` split's texts, labels never
+read), then subtract them per request. 500 unlabeled queries match the transductive result:
+
+| pool | transductive | inductive |
+|---|---|---|
+| 100 | +2.51 | +1.57 |
+| 250 | +2.50 | +2.24 |
+| **500** | **+2.53** | **+2.54** |
+
+The same applies one layer up, to the bi-encoder prefilter. Its published `recall@20` of
+97.8 % also relied on a batch mean; per request it degrades to the bare-cosine 96.8 %.
+Refit offline it recovers fully (97.9 %).
+
+**Held-out test.** The gate threshold and the fusion rule below were both chosen after
+looking at eval results, so we re-ran on data nothing had touched: `idx[5500:]` from each
+pool (`fit`/`dev`/`eval` use `idx[:5500]`), deduplicated by text against all three splits.
+2,500 fresh items per dataset. The column means were **not refit** — the ones fitted on the
+`fit` split were applied as-is.
+
+| task | options | gate | no centering | gated | Δ |
+|---|---|---|---|---|---|
+| sst2 | 2 | off | 83.72 % | 83.72 % | +0.00 |
+| ag_news | 4 | off | 84.08 % | 84.08 % | +0.00 |
+| emotion | 6 | off | 77.56 % | 77.56 % | +0.00 |
+| banking77 | 77 | **on** | 68.52 % | **70.76 %** | **+2.24** |
+| macro | | | 78.47 % | **79.03 %** | +0.56 |
+
++2.24 pp on data never seen, against +2.28 pp on eval. The three exact zeros are the
+control: they prove the gate is the identity on low-cardinality tasks and that nothing
+else changed.
+
+**What this is not.** The threshold (20) was picked after seeing per-task results on four
+datasets, of which one crosses it. Two high-cardinality tasks support the mechanism; that
+is evidence, not proof. Jev was **not** measured on the held-out set — no comparison there.
+
+## Update — fitting the fusion weight made things worse
+
+Picking the two-backend mixing weight by accuracy on a 100-item calibration fold is
+overfitting, and the more you fit the worse it gets. We dumped both backends' probabilities
+for all five use cases and compared five rules offline (`weight_probe.py`, `out/weight_probe.json`):
+
+| rule | macro |
+|---|---|
+| **fixed 50/50 — no fitting** | **72.45 %** |
+| shrink argmax halfway to 0.5 | 72.30 % |
+| midpoint of the within-1-SE plateau | 71.95 % |
+| argmax of the calibration fold | 71.85 % |
+| fall back to the best single backend | 70.15 % |
+| Laya alone | 71.05 % |
+| best weight in hindsight (ceiling) | 73.10 % |
+
+Monotone. The weight is redundant with temperature: each backend is already calibrated by
+NLL, and temperature encodes how much to trust it. On CLINC routing, cross scores 64.5 %
+and Laya 87.8 % — 23 points apart — and an equal mix still scores 87.8 %. Fitting a weight
+on 100 samples adds variance and no signal.
+
+Fusion itself is worth having: on the guardrail case the two backends score 52.5 % and
+53.0 % alone and 57.0 % mixed (they are wrong together only 25.2 % of the time). The old
+rule fell back to a single backend and threw those 4 points away. `Ensemble.calibrate()`
+now fits temperature only; `fit_weights=True` restores the old behaviour for comparison.
+
 ## What did not work
 
-Eight ideas we tested and would otherwise have guessed were wins. These cost us a day;
+Eleven ideas we tested and would otherwise have guessed were wins. These cost us a day;
 they are the part of this repo most likely to save you one.
 
 | idea | result |
@@ -241,10 +328,13 @@ they are the part of this repo most likely to save you one.
 | Evolutionary search over decision-head weights, honest LODO transfer | **−1.5 pp** — negative transfer; only helps when the underlying signal is weak |
 | Scaling the cross-encoder 149M → 395M | **+2.8 / −3.2 / +0.2 pp** across three tasks — no net gain for 3× the cost |
 | Listwise re-ranking with Qwen2.5-1.5B over the top-5 | **−1.0 pp** vs the cross-encoder alone |
-| Column-centering the NLI scores | **0.0 pp** macro — helps BANKING77 +2.6, hurts Emotion −3.1 |
+| Column-centering the NLI scores, applied to every task | **0.0 pp** macro — helps BANKING77 +2.6, hurts Emotion −3.1. **Superseded**: gated by option count it is worth +2.24 pp on held-out BANKING77 — see the update above |
 | Asymmetric `search_query:`/`search_document:` prefixes | **−1.8 pp** — classification-by-similarity is not retrieval |
 | Distilling the cross-encoder into the bi-encoder head | **−5.4 pp** vs the teacher; collapses on Emotion (−18.8 pp) |
 | Raw `ModernBERT-base` (MLM) as a sentence encoder | **35.0 %**, worse than an 8M static embedding — training objective dominates scale |
+| Pairwise contrast prompting (`A rather than B`) over the top-12 | **−3.5 pp** vs independent scoring; flipping only the top-2 is −7.5. The model is reliable on single-label entailment and out of distribution on contrast sentences |
+| Fitting the two-backend fusion weight on a 100-item calibration fold | **−2.3 pp** vs fixed 50/50 — see the update above |
+| Upgrading the cross-encoder's candidate prefilter from 8M static to 149M ModernBERT | **+1.5 pp** on CLINC despite recall@20 rising 92.0 → 97.5; with centering on it is **−0.8 pp**. Newly recalled candidates are also new distractors. (Worth +3.3 pp for the *Laya* backend — the same change has opposite signs on the two architectures) |
 
 The one thing that *did* work was architectural: scoring *(text, option)* **jointly**
 (cross-encoder) instead of embedding them separately and comparing cosines. That single

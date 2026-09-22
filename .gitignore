@@ -5,6 +5,7 @@
 # 注意：.gitignore 不支持行尾注释，注释必须单独成行
 cache/emb/
 cache/tasks.json
+cache/holdout.json
 cache/*.parquet
 
 # 本地运行产物
@@ -20,3 +21,10 @@ __pycache__/
 .dev.vars
 *.key
 *.pem
+
+# 业务数据与外部私有项目的脚本，一律不进公开仓库
+# （这些脚本读 ~/projects/hybrid-leads 下的真实客户名单：公司名、决策人、联系方式）
+leads_persona.py
+probe_leads.py
+out/leads_persona.json
+out/probe_leads.json
