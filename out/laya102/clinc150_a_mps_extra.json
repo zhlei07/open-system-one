@@ -1,0 +1,470 @@
+{
+ "dataset": "clinc150",
+ "split": "test",
+ "pool_rows": 4500,
+ "rows": 500,
+ "seed": 0,
+ "labels": 150,
+ "k": 20,
+ "group_size": 16,
+ "device": "mps",
+ "embedder_devices": {
+  "minilm": "mps:0",
+  "minilm-lib": "mps:0",
+  "nomic-qd": "mps:0",
+  "nomic-qd-lib": "mps:0"
+ },
+ "torch_threads": 6,
+ "laya": "0.4.4",
+ "torch": "2.14.1",
+ "laya_checkpoint_snapshot": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+ "agent_cfg": {
+  "max_len": 512,
+  "head_max_len": 192
+ },
+ "embedders": {
+  "minilm": {
+   "name": "minilm/none/bare",
+   "repo": "sentence-transformers/all-MiniLM-L6-v2",
+   "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+   "query_prefix": "",
+   "label_prefix": ""
+  },
+  "minilm-lib": {
+   "name": "minilm/none/library",
+   "repo": "sentence-transformers/all-MiniLM-L6-v2",
+   "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+   "query_prefix": "",
+   "label_prefix": ""
+  },
+  "nomic-qd": {
+   "name": "nomic/asym/bare",
+   "repo": "nomic-ai/modernbert-embed-base",
+   "revision": "d556a88e332558790b210f7bdbe87da2fa94a8d8",
+   "query_prefix": "search_query: ",
+   "label_prefix": "search_document: "
+  },
+  "nomic-qd-lib": {
+   "name": "nomic/asym/library",
+   "repo": "nomic-ai/modernbert-embed-base",
+   "revision": "d556a88e332558790b210f7bdbe87da2fa94a8d8",
+   "query_prefix": "search_query: ",
+   "label_prefix": "search_document: "
+  }
+ },
+ "selection_rule": "highest mean dev recall@20 over the three datasets, ties by recall@1",
+ "roles": {
+  "minilm": "minilm/none/bare",
+  "minilm-lib": "minilm/none/library",
+  "nomic-qd": "nomic/asym/bare",
+  "nomic-qd-lib": "nomic/asym/library"
+ },
+ "roles_from": "--roles",
+ "dataset_revisions": {
+  "mteb/banking77": "18072d2685ea682290f7b8924d94c62acc19c0b2",
+  "clinc/clinc_oos": "155b9c710419136e17307b80d0a13e68cd46b4ec",
+  "SetFit/amazon_massive_intent_en-US": "f7672a018e8ceb37fc0184dcfbb7e665155ffea6"
+ },
+ "machine": {
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "python": "3.12.13"
+ },
+ "thermal_pressure": [
+  [
+   0,
+   0
+  ],
+  [
+   50,
+   0
+  ],
+  [
+   100,
+   0
+  ],
+  [
+   150,
+   0
+  ],
+  [
+   200,
+   0
+  ],
+  [
+   250,
+   0
+  ],
+  [
+   300,
+   0
+  ],
+  [
+   350,
+   0
+  ],
+  [
+   400,
+   0
+  ],
+  [
+   450,
+   0
+  ],
+  [
+   499,
+   0
+  ]
+ ],
+ "warm_rows_per_arm": 5,
+ "arm_order": "rotating per row",
+ "wall_s": 161.3,
+ "arms": {
+  "minilm:top1": {
+   "accuracy": 0.706,
+   "correct": 353,
+   "ci95": [
+    0.6646,
+    0.7442
+   ],
+   "p50_ms": 3.0,
+   "p95_ms": 3.6,
+   "mean_ms": 3.1,
+   "calls_per_row": 0.0,
+   "recall@20": 0.964
+  },
+  "minilm:shortlist": {
+   "accuracy": 0.866,
+   "correct": 433,
+   "ci95": [
+    0.8333,
+    0.8931
+   ],
+   "p50_ms": 25.1,
+   "p95_ms": 27.3,
+   "mean_ms": 25.4,
+   "calls_per_row": 1.0,
+   "ece": 0.1164,
+   "errors": {
+    "retrieval_miss": 18,
+    "decision_error": 49
+   }
+  },
+  "minilm:shortlist+tournament": {
+   "accuracy": 0.876,
+   "correct": 438,
+   "ci95": [
+    0.8442,
+    0.9021
+   ],
+   "p50_ms": 44.9,
+   "p95_ms": 49.1,
+   "mean_ms": 45.4,
+   "calls_per_row": 2.0,
+   "ece": 0.0726,
+   "errors": {
+    "retrieval_miss": 18,
+    "elimination_miss": 35,
+    "final_error": 9
+   }
+  },
+  "minilm-lib:top1": {
+   "accuracy": 0.34,
+   "correct": 170,
+   "ci95": [
+    0.2998,
+    0.3826
+   ],
+   "p50_ms": 3.2,
+   "p95_ms": 3.4,
+   "mean_ms": 3.2,
+   "calls_per_row": 0.0,
+   "recall@20": 0.86
+  },
+  "minilm-lib:shortlist": {
+   "accuracy": 0.79,
+   "correct": 395,
+   "ci95": [
+    0.7522,
+    0.8234
+   ],
+   "p50_ms": 25.0,
+   "p95_ms": 26.6,
+   "mean_ms": 25.2,
+   "calls_per_row": 1.0,
+   "ece": 0.179,
+   "errors": {
+    "retrieval_miss": 70,
+    "decision_error": 35
+   }
+  },
+  "minilm-lib:shortlist+tournament": {
+   "accuracy": 0.792,
+   "correct": 396,
+   "ci95": [
+    0.7543,
+    0.8253
+   ],
+   "p50_ms": 44.5,
+   "p95_ms": 47.7,
+   "mean_ms": 44.8,
+   "calls_per_row": 2.0,
+   "ece": 0.1217,
+   "errors": {
+    "retrieval_miss": 70,
+    "elimination_miss": 26,
+    "final_error": 8
+   }
+  },
+  "nomic-qd:top1": {
+   "accuracy": 0.678,
+   "correct": 339,
+   "ci95": [
+    0.6358,
+    0.7175
+   ],
+   "p50_ms": 7.7,
+   "p95_ms": 8.4,
+   "mean_ms": 7.7,
+   "calls_per_row": 0.0,
+   "recall@20": 0.968
+  },
+  "nomic-qd:shortlist": {
+   "accuracy": 0.864,
+   "correct": 432,
+   "ci95": [
+    0.8312,
+    0.8913
+   ],
+   "p50_ms": 29.6,
+   "p95_ms": 31.9,
+   "mean_ms": 29.8,
+   "calls_per_row": 1.0,
+   "ece": 0.1142,
+   "errors": {
+    "retrieval_miss": 16,
+    "decision_error": 52
+   }
+  },
+  "nomic-qd:shortlist+tournament": {
+   "accuracy": 0.868,
+   "correct": 434,
+   "ci95": [
+    0.8355,
+    0.8949
+   ],
+   "p50_ms": 49.1,
+   "p95_ms": 53.0,
+   "mean_ms": 49.5,
+   "calls_per_row": 2.0,
+   "ece": 0.0587,
+   "errors": {
+    "retrieval_miss": 16,
+    "elimination_miss": 42,
+    "final_error": 8
+   }
+  },
+  "nomic-qd-lib:top1": {
+   "accuracy": 0.214,
+   "correct": 107,
+   "ci95": [
+    0.1803,
+    0.2521
+   ],
+   "p50_ms": 8.1,
+   "p95_ms": 8.8,
+   "mean_ms": 8.2,
+   "calls_per_row": 0.0,
+   "recall@20": 0.77
+  },
+  "nomic-qd-lib:shortlist": {
+   "accuracy": 0.722,
+   "correct": 361,
+   "ci95": [
+    0.6812,
+    0.7595
+   ],
+   "p50_ms": 29.6,
+   "p95_ms": 31.5,
+   "mean_ms": 29.7,
+   "calls_per_row": 1.0,
+   "ece": 0.2373,
+   "errors": {
+    "retrieval_miss": 115,
+    "decision_error": 24
+   }
+  },
+  "nomic-qd-lib:shortlist+tournament": {
+   "accuracy": 0.724,
+   "correct": 362,
+   "ci95": [
+    0.6832,
+    0.7614
+   ],
+   "p50_ms": 49.1,
+   "p95_ms": 52.6,
+   "mean_ms": 49.3,
+   "calls_per_row": 2.0,
+   "ece": 0.1593,
+   "errors": {
+    "retrieval_miss": 115,
+    "elimination_miss": 15,
+    "final_error": 8
+   }
+  }
+ },
+ "paired": {
+  "minilm:shortlist vs minilm:top1": {
+   "delta": 0.16,
+   "gained": 92,
+   "lost": 12,
+   "mcnemar_p": 0.0
+  },
+  "minilm:shortlist+tournament vs minilm:top1": {
+   "delta": 0.17,
+   "gained": 97,
+   "lost": 12,
+   "mcnemar_p": 0.0
+  },
+  "minilm:shortlist+tournament vs minilm:shortlist": {
+   "delta": 0.01,
+   "gained": 14,
+   "lost": 9,
+   "mcnemar_p": 0.4049
+  },
+  "minilm-lib:shortlist vs minilm-lib:top1": {
+   "delta": 0.45,
+   "gained": 229,
+   "lost": 4,
+   "mcnemar_p": 0.0
+  },
+  "minilm-lib:shortlist+tournament vs minilm-lib:top1": {
+   "delta": 0.452,
+   "gained": 233,
+   "lost": 7,
+   "mcnemar_p": 0.0
+  },
+  "minilm-lib:shortlist+tournament vs minilm-lib:shortlist": {
+   "delta": 0.002,
+   "gained": 8,
+   "lost": 7,
+   "mcnemar_p": 1.0
+  },
+  "nomic-qd:shortlist vs nomic-qd:top1": {
+   "delta": 0.186,
+   "gained": 111,
+   "lost": 18,
+   "mcnemar_p": 0.0
+  },
+  "nomic-qd:shortlist+tournament vs nomic-qd:top1": {
+   "delta": 0.19,
+   "gained": 113,
+   "lost": 18,
+   "mcnemar_p": 0.0
+  },
+  "nomic-qd:shortlist+tournament vs nomic-qd:shortlist": {
+   "delta": 0.004,
+   "gained": 16,
+   "lost": 14,
+   "mcnemar_p": 0.8555
+  },
+  "nomic-qd-lib:shortlist vs nomic-qd-lib:top1": {
+   "delta": 0.508,
+   "gained": 258,
+   "lost": 4,
+   "mcnemar_p": 0.0
+  },
+  "nomic-qd-lib:shortlist+tournament vs nomic-qd-lib:top1": {
+   "delta": 0.51,
+   "gained": 261,
+   "lost": 6,
+   "mcnemar_p": 0.0
+  },
+  "nomic-qd-lib:shortlist+tournament vs nomic-qd-lib:shortlist": {
+   "delta": 0.002,
+   "gained": 9,
+   "lost": 8,
+   "mcnemar_p": 1.0
+  }
+ },
+ "option_budget": {
+  "single": {
+   "options": 150,
+   "options_distinct": 149,
+   "tokens_per_option": 4
+  },
+  "wide": {
+   "options": 150,
+   "options_distinct": 150,
+   "tokens_per_option": null
+  },
+  "tournament_groups": [
+   {
+    "options": 15,
+    "options_distinct": 15,
+    "tokens_per_option": null
+   },
+   {
+    "options": 15,
+    "options_distinct": 15,
+    "tokens_per_option": null
+   },
+   {
+    "options": 15,
+    "options_distinct": 15,
+    "tokens_per_option": null
+   },
+   {
+    "options": 15,
+    "options_distinct": 15,
+    "tokens_per_option": null
+   },
+   {
+    "options": 15,
+    "options_distinct": 15,
+    "tokens_per_option": null
+   },
+   {
+    "options": 15,
+    "options_distinct": 15,
+    "tokens_per_option": null
+   },
+   {
+    "options": 15,
+    "options_distinct": 15,
+    "tokens_per_option": null
+   },
+   {
+    "options": 15,
+    "options_distinct": 15,
+    "tokens_per_option": null
+   },
+   {
+    "options": 15,
+    "options_distinct": 15,
+    "tokens_per_option": null
+   },
+   {
+    "options": 15,
+    "options_distinct": 15,
+    "tokens_per_option": null
+   }
+  ],
+  "minilm:shortlist": {
+   "rows_cut": 0,
+   "min_distinct": 20
+  },
+  "minilm-lib:shortlist": {
+   "rows_cut": 0,
+   "min_distinct": 20
+  },
+  "nomic-qd:shortlist": {
+   "rows_cut": 0,
+   "min_distinct": 20
+  },
+  "nomic-qd-lib:shortlist": {
+   "rows_cut": 0,
+   "min_distinct": 20
+  }
+ }
+}

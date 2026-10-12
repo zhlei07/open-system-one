@@ -1,0 +1,267 @@
+{
+ "score": "cos + (cos - mu), mu fitted on the unlabeled development-split texts",
+ "device": "mps",
+ "machine": "A",
+ "k": 20,
+ "dev_rows": 600,
+ "datasets": {
+  "banking77": {
+   "small": {
+    "spec": "bge-small/instruct/bare",
+    "plain_top20_matches_stored": 1.0,
+    "top1": [
+     0.662,
+     0.664
+    ],
+    "recall@20": [
+     0.982,
+     0.986
+    ],
+    "shortlist": [
+     0.63,
+     0.628
+    ],
+    "top1_paired": {
+     "delta": 0.002,
+     "gained": 13,
+     "lost": 12,
+     "p": 1.0
+    },
+    "shortlist_paired": {
+     "delta": -0.002,
+     "gained": 15,
+     "lost": 16,
+     "p": 1.0
+    }
+   },
+   "nomic": {
+    "spec": "nomic/sym/bare",
+    "plain_top20_matches_stored": 1.0,
+    "top1": [
+     0.644,
+     0.628
+    ],
+    "recall@20": [
+     0.968,
+     0.982
+    ],
+    "shortlist": [
+     0.634,
+     0.642
+    ],
+    "top1_paired": {
+     "delta": -0.016,
+     "gained": 7,
+     "lost": 15,
+     "p": 0.1338
+    },
+    "shortlist_paired": {
+     "delta": 0.008,
+     "gained": 21,
+     "lost": 17,
+     "p": 0.6271
+    }
+   },
+   "minilm": {
+    "spec": "minilm/none/bare",
+    "plain_top20_matches_stored": 1.0,
+    "top1": [
+     0.596,
+     0.602
+    ],
+    "recall@20": [
+     0.97,
+     0.982
+    ],
+    "shortlist": [
+     0.626,
+     0.63
+    ],
+    "top1_paired": {
+     "delta": 0.006,
+     "gained": 17,
+     "lost": 14,
+     "p": 0.7201
+    },
+    "shortlist_paired": {
+     "delta": 0.004,
+     "gained": 21,
+     "lost": 19,
+     "p": 0.8746
+    }
+   }
+  },
+  "clinc150": {
+   "small": {
+    "spec": "bge-small/instruct/bare",
+    "plain_top20_matches_stored": 1.0,
+    "top1": [
+     0.704,
+     0.716
+    ],
+    "recall@20": [
+     0.958,
+     0.968
+    ],
+    "shortlist": [
+     0.868,
+     0.87
+    ],
+    "top1_paired": {
+     "delta": 0.012,
+     "gained": 13,
+     "lost": 7,
+     "p": 0.2632
+    },
+    "shortlist_paired": {
+     "delta": 0.002,
+     "gained": 13,
+     "lost": 12,
+     "p": 1.0
+    }
+   },
+   "nomic": {
+    "spec": "nomic/sym/bare",
+    "plain_top20_matches_stored": 1.0,
+    "top1": [
+     0.714,
+     0.722
+    ],
+    "recall@20": [
+     0.972,
+     0.978
+    ],
+    "shortlist": [
+     0.878,
+     0.882
+    ],
+    "top1_paired": {
+     "delta": 0.008,
+     "gained": 11,
+     "lost": 7,
+     "p": 0.4807
+    },
+    "shortlist_paired": {
+     "delta": 0.004,
+     "gained": 11,
+     "lost": 9,
+     "p": 0.8238
+    }
+   },
+   "minilm": {
+    "spec": "minilm/none/bare",
+    "plain_top20_matches_stored": 1.0,
+    "top1": [
+     0.706,
+     0.712
+    ],
+    "recall@20": [
+     0.964,
+     0.966
+    ],
+    "shortlist": [
+     0.866,
+     0.87
+    ],
+    "top1_paired": {
+     "delta": 0.006,
+     "gained": 6,
+     "lost": 3,
+     "p": 0.5078
+    },
+    "shortlist_paired": {
+     "delta": 0.004,
+     "gained": 7,
+     "lost": 5,
+     "p": 0.7744
+    }
+   }
+  },
+  "massive": {
+   "small": {
+    "spec": "bge-small/instruct/bare",
+    "plain_top20_matches_stored": 1.0,
+    "top1": [
+     0.584,
+     0.588
+    ],
+    "recall@20": [
+     0.948,
+     0.952
+    ],
+    "shortlist": [
+     0.644,
+     0.628
+    ],
+    "top1_paired": {
+     "delta": 0.004,
+     "gained": 15,
+     "lost": 13,
+     "p": 0.8506
+    },
+    "shortlist_paired": {
+     "delta": -0.016,
+     "gained": 13,
+     "lost": 21,
+     "p": 0.2295
+    }
+   },
+   "nomic": {
+    "spec": "nomic/sym/bare",
+    "plain_top20_matches_stored": 1.0,
+    "top1": [
+     0.508,
+     0.508
+    ],
+    "recall@20": [
+     0.884,
+     0.904
+    ],
+    "shortlist": [
+     0.602,
+     0.602
+    ],
+    "top1_paired": {
+     "delta": 0.0,
+     "gained": 4,
+     "lost": 4,
+     "p": 1.0
+    },
+    "shortlist_paired": {
+     "delta": 0.0,
+     "gained": 17,
+     "lost": 17,
+     "p": 1.0
+    }
+   },
+   "minilm": {
+    "spec": "minilm/none/bare",
+    "plain_top20_matches_stored": 1.0,
+    "top1": [
+     0.516,
+     0.516
+    ],
+    "recall@20": [
+     0.924,
+     0.934
+    ],
+    "shortlist": [
+     0.606,
+     0.612
+    ],
+    "top1_paired": {
+     "delta": 0.0,
+     "gained": 5,
+     "lost": 5,
+     "p": 1.0
+    },
+    "shortlist_paired": {
+     "delta": 0.006,
+     "gained": 22,
+     "lost": 19,
+     "p": 0.7552
+    }
+   }
+  }
+ }
+}

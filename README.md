@@ -354,6 +354,49 @@ no hand-written descriptions — 150 intents is too many to write well, and temp
 worse than the bare labels. Jev was measured on bare labels only, so its column is not
 comparable under this condition.
 
+## Update — the shortlist on official test rows (Laya #102)
+
+On [NandhaKishorM/laya#102](https://github.com/NandhaKishorM/laya/issues/102), xinpingzh proposed a
+same-row comparison of the shortlist above against Laya's own fix for large option sets, the tournament
+from #950: 500 fixed rows per official test split (BANKING77, CLINC150 in-scope, MASSIVE en-US), top-20
+retrieval, tournament groups of at most 16, latency including query encoding and every decision round.
+We ran that protocol ourselves on #950's 500-row sample (`benchmark.py`'s seed-0 rows), with #950's question
+format, Laya 0.4.4, on two Apple-silicon laptops (MPS and CPU); the embedder was chosen on development rows only.
+
+The rows check out first: Laya 0.4.4 reproduces all nine `single` / `wide` / `tournament` accuracies of
+#950's published 500-row table, and MPS and CPU give the same answer on every row and arm but one.
+
+| 500 official test rows, MPS | BANKING77 (77) | CLINC150 (150) | MASSIVE (60) | p50 |
+|---|---|---|---|---|
+| Laya, all options, default budget | 41.6 % | 60.4 % | 54.2 % | 41–89 ms |
+| Laya, all options, 512/1024 budget *(our 54.3 % setting)* | 55.4 % | 68.0 % | 62.2 % | 46–92 ms |
+| Laya tournament, groups ≤ 16 | 58.4 % | **89.4 %** | 59.0 % | 70–92 ms |
+| BGE-small top-1, no Laya | **66.2 %** | 70.4 % | 58.4 % | 6 ms |
+| **BGE-small top-20 → Laya once** | 63.0 % | 86.8 % | **64.4 %** | 29–34 ms |
+| BGE-small top-20 → tournament | 62.2 % | 86.4 % | 64.0 % | 50–57 ms |
+
+- **The shortlist holds up on official test rows.** Against all options at the 512/1024 budget — the
+  comparison behind our 54.3 % → 60.8 % — it is +7.6 / +18.8 / +2.2 pp.
+- **Against the tournament** it is +4.6 pp on BANKING77 (54 rows gained / 31 lost, exact McNemar p = 0.017)
+  and +5.4 on MASSIVE (p = 0.011), −2.6 on CLINC150 (p = 0.09), at about half the latency: 34 vs 70 ms on
+  MPS, 105 vs 304 ms on CPU (BANKING77).
+- **A tournament after the shortlist adds nothing**: −0.8 / −0.4 / −0.4 pp, all p > 0.6. At k = 20 the option
+  budget cuts none of the shortlists, so there is no truncation left to relieve.
+- **On BANKING77 the embedder alone is as good as any Laya arm**: top-1 66.2 % against 63.0 % for the
+  shortlist (p = 0.14). Where the labels are near-synonyms, Laya adds nothing after a good retriever.
+- **The retriever barely matters, its query text does.** BGE-small, MiniLM and Nomic land within 1 pp of each
+  other on the BANKING77 and CLINC150 shortlists. But `laya.shortlist` embeds `instructions + "\n" +
+  JSON(state)`, not the message: that leaves the BANKING77 shortlist at 62.8 % (62.6 % with the bare message)
+  while MiniLM's top-1 drops from 59.6 % to 48.0 %. A top-1 baseline computed that way makes Laya look
+  12 points better than it is.
+- **Our column-centering does not move these numbers.** Scoring the shortlist with cosine + centered cosine
+  (means fitted on unlabeled development text) raises recall@20 by 0.2–2.0 pp in all nine embedder × dataset
+  cells, but top-1 and shortlist accuracy change by −1.6 to +0.8 pp, none significant. On these rows the gain
+  comes from the shortlist structure, not from our score.
+
+Code: `laya102_bench.py`, `laya102_colcenter.py`, `laya102_report.py`. Results, per-row files and the full
+report: [`out/laya102/`](out/laya102/) ([REPORT.md](out/laya102/REPORT.md)).
+
 ## What did not work
 
 Eleven ideas we tested and would otherwise have guessed were wins. These cost us a day;

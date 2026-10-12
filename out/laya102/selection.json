@@ -1,0 +1,392 @@
+{
+ "rule": "highest mean dev recall@20 over the three datasets, ties by recall@1",
+ "chosen": {
+  "small": "bge-small/instruct/bare",
+  "nomic": "nomic/sym/bare"
+ },
+ "mean": {
+  "bge-small/none/bare": {
+   "recall@1": 0.6572,
+   "recall@5": 0.8872,
+   "recall@10": 0.9294,
+   "recall@16": 0.9484,
+   "recall@20": 0.9606,
+   "recall@32": 0.9778,
+   "recall@48": 0.9911
+  },
+  "bge-small/none/library": {
+   "recall@1": 0.2928,
+   "recall@5": 0.6233,
+   "recall@10": 0.7717,
+   "recall@16": 0.8478,
+   "recall@20": 0.8817,
+   "recall@32": 0.9261,
+   "recall@48": 0.955
+  },
+  "bge-small/instruct/bare": {
+   "recall@1": 0.65,
+   "recall@5": 0.8839,
+   "recall@10": 0.9345,
+   "recall@16": 0.9556,
+   "recall@20": 0.9656,
+   "recall@32": 0.9806,
+   "recall@48": 0.9928
+  },
+  "bge-small/instruct/library": {
+   "recall@1": 0.3211,
+   "recall@5": 0.6567,
+   "recall@10": 0.7822,
+   "recall@16": 0.8533,
+   "recall@20": 0.885,
+   "recall@32": 0.9389,
+   "recall@48": 0.9633
+  },
+  "minilm/none/bare": {
+   "recall@1": 0.6011,
+   "recall@5": 0.8594,
+   "recall@10": 0.9072,
+   "recall@16": 0.9345,
+   "recall@20": 0.9467,
+   "recall@32": 0.9694,
+   "recall@48": 0.9867
+  },
+  "minilm/none/library": {
+   "recall@1": 0.3783,
+   "recall@5": 0.6766,
+   "recall@10": 0.8111,
+   "recall@16": 0.8645,
+   "recall@20": 0.8917,
+   "recall@32": 0.9272,
+   "recall@48": 0.9672
+  },
+  "nomic/sym/bare": {
+   "recall@1": 0.6161,
+   "recall@5": 0.8589,
+   "recall@10": 0.9055,
+   "recall@16": 0.9283,
+   "recall@20": 0.945,
+   "recall@32": 0.9739,
+   "recall@48": 0.9894
+  },
+  "nomic/sym/library": {
+   "recall@1": 0.4172,
+   "recall@5": 0.6695,
+   "recall@10": 0.7667,
+   "recall@16": 0.8394,
+   "recall@20": 0.8672,
+   "recall@32": 0.9239,
+   "recall@48": 0.9544
+  },
+  "nomic/asym/bare": {
+   "recall@1": 0.5967,
+   "recall@5": 0.8383,
+   "recall@10": 0.8872,
+   "recall@16": 0.9228,
+   "recall@20": 0.9345,
+   "recall@32": 0.9644,
+   "recall@48": 0.9844
+  },
+  "nomic/asym/library": {
+   "recall@1": 0.2905,
+   "recall@5": 0.5789,
+   "recall@10": 0.7116,
+   "recall@16": 0.7784,
+   "recall@20": 0.8217,
+   "recall@32": 0.8933,
+   "recall@48": 0.9578
+  }
+ },
+ "per_dataset": {
+  "banking77": {
+   "dev_split": "train",
+   "dev_rows": 600,
+   "pool": 9993,
+   "bge-small/none/bare": {
+    "recall@1": 0.6783,
+    "recall@5": 0.905,
+    "recall@10": 0.9567,
+    "recall@16": 0.9717,
+    "recall@20": 0.975,
+    "recall@32": 0.9867,
+    "recall@48": 1.0
+   },
+   "bge-small/none/library": {
+    "recall@1": 0.3483,
+    "recall@5": 0.7067,
+    "recall@10": 0.8467,
+    "recall@16": 0.9033,
+    "recall@20": 0.935,
+    "recall@32": 0.9717,
+    "recall@48": 0.99
+   },
+   "bge-small/instruct/bare": {
+    "recall@1": 0.665,
+    "recall@5": 0.905,
+    "recall@10": 0.9567,
+    "recall@16": 0.9717,
+    "recall@20": 0.98,
+    "recall@32": 0.99,
+    "recall@48": 0.9983
+   },
+   "bge-small/instruct/library": {
+    "recall@1": 0.37,
+    "recall@5": 0.735,
+    "recall@10": 0.8517,
+    "recall@16": 0.9133,
+    "recall@20": 0.9433,
+    "recall@32": 0.9783,
+    "recall@48": 0.9883
+   },
+   "minilm/none/bare": {
+    "recall@1": 0.6,
+    "recall@5": 0.86,
+    "recall@10": 0.9133,
+    "recall@16": 0.9517,
+    "recall@20": 0.9617,
+    "recall@32": 0.9867,
+    "recall@48": 0.995
+   },
+   "minilm/none/library": {
+    "recall@1": 0.465,
+    "recall@5": 0.7683,
+    "recall@10": 0.8717,
+    "recall@16": 0.9167,
+    "recall@20": 0.9367,
+    "recall@32": 0.9667,
+    "recall@48": 0.9833
+   },
+   "nomic/sym/bare": {
+    "recall@1": 0.6183,
+    "recall@5": 0.87,
+    "recall@10": 0.92,
+    "recall@16": 0.9467,
+    "recall@20": 0.9667,
+    "recall@32": 0.9883,
+    "recall@48": 0.9933
+   },
+   "nomic/sym/library": {
+    "recall@1": 0.4933,
+    "recall@5": 0.755,
+    "recall@10": 0.8283,
+    "recall@16": 0.875,
+    "recall@20": 0.8967,
+    "recall@32": 0.9417,
+    "recall@48": 0.9783
+   },
+   "nomic/asym/bare": {
+    "recall@1": 0.61,
+    "recall@5": 0.8583,
+    "recall@10": 0.91,
+    "recall@16": 0.9417,
+    "recall@20": 0.95,
+    "recall@32": 0.9783,
+    "recall@48": 0.9883
+   },
+   "nomic/asym/library": {
+    "recall@1": 0.3933,
+    "recall@5": 0.6817,
+    "recall@10": 0.8033,
+    "recall@16": 0.8617,
+    "recall@20": 0.89,
+    "recall@32": 0.9367,
+    "recall@48": 0.9683
+   }
+  },
+  "clinc150": {
+   "dev_split": "validation",
+   "dev_rows": 600,
+   "pool": 3000,
+   "bge-small/none/bare": {
+    "recall@1": 0.6967,
+    "recall@5": 0.8967,
+    "recall@10": 0.9333,
+    "recall@16": 0.9517,
+    "recall@20": 0.96,
+    "recall@32": 0.9733,
+    "recall@48": 0.9833
+   },
+   "bge-small/none/library": {
+    "recall@1": 0.3117,
+    "recall@5": 0.5833,
+    "recall@10": 0.705,
+    "recall@16": 0.79,
+    "recall@20": 0.8233,
+    "recall@32": 0.88,
+    "recall@48": 0.9183
+   },
+   "bge-small/instruct/bare": {
+    "recall@1": 0.6883,
+    "recall@5": 0.8917,
+    "recall@10": 0.9367,
+    "recall@16": 0.9617,
+    "recall@20": 0.9667,
+    "recall@32": 0.975,
+    "recall@48": 0.9833
+   },
+   "bge-small/instruct/library": {
+    "recall@1": 0.345,
+    "recall@5": 0.6217,
+    "recall@10": 0.7333,
+    "recall@16": 0.805,
+    "recall@20": 0.8333,
+    "recall@32": 0.8967,
+    "recall@48": 0.9317
+   },
+   "minilm/none/bare": {
+    "recall@1": 0.665,
+    "recall@5": 0.9133,
+    "recall@10": 0.955,
+    "recall@16": 0.9617,
+    "recall@20": 0.97,
+    "recall@32": 0.9733,
+    "recall@48": 0.985
+   },
+   "minilm/none/library": {
+    "recall@1": 0.385,
+    "recall@5": 0.6533,
+    "recall@10": 0.815,
+    "recall@16": 0.8717,
+    "recall@20": 0.895,
+    "recall@32": 0.92,
+    "recall@48": 0.9483
+   },
+   "nomic/sym/bare": {
+    "recall@1": 0.6833,
+    "recall@5": 0.9033,
+    "recall@10": 0.9383,
+    "recall@16": 0.9533,
+    "recall@20": 0.9583,
+    "recall@32": 0.975,
+    "recall@48": 0.9883
+   },
+   "nomic/sym/library": {
+    "recall@1": 0.4067,
+    "recall@5": 0.6517,
+    "recall@10": 0.77,
+    "recall@16": 0.8483,
+    "recall@20": 0.8667,
+    "recall@32": 0.9167,
+    "recall@48": 0.935
+   },
+   "nomic/asym/bare": {
+    "recall@1": 0.6733,
+    "recall@5": 0.8933,
+    "recall@10": 0.9233,
+    "recall@16": 0.9517,
+    "recall@20": 0.9617,
+    "recall@32": 0.9733,
+    "recall@48": 0.9817
+   },
+   "nomic/asym/library": {
+    "recall@1": 0.1733,
+    "recall@5": 0.4817,
+    "recall@10": 0.6533,
+    "recall@16": 0.7117,
+    "recall@20": 0.7683,
+    "recall@32": 0.8533,
+    "recall@48": 0.93
+   }
+  },
+  "massive": {
+   "dev_split": "validation",
+   "dev_rows": 600,
+   "pool": 2033,
+   "bge-small/none/bare": {
+    "recall@1": 0.5967,
+    "recall@5": 0.86,
+    "recall@10": 0.8983,
+    "recall@16": 0.9217,
+    "recall@20": 0.9467,
+    "recall@32": 0.9733,
+    "recall@48": 0.99
+   },
+   "bge-small/none/library": {
+    "recall@1": 0.2183,
+    "recall@5": 0.58,
+    "recall@10": 0.7633,
+    "recall@16": 0.85,
+    "recall@20": 0.8867,
+    "recall@32": 0.9267,
+    "recall@48": 0.9567
+   },
+   "bge-small/instruct/bare": {
+    "recall@1": 0.5967,
+    "recall@5": 0.855,
+    "recall@10": 0.91,
+    "recall@16": 0.9333,
+    "recall@20": 0.95,
+    "recall@32": 0.9767,
+    "recall@48": 0.9967
+   },
+   "bge-small/instruct/library": {
+    "recall@1": 0.2483,
+    "recall@5": 0.6133,
+    "recall@10": 0.7617,
+    "recall@16": 0.8417,
+    "recall@20": 0.8783,
+    "recall@32": 0.9417,
+    "recall@48": 0.97
+   },
+   "minilm/none/bare": {
+    "recall@1": 0.5383,
+    "recall@5": 0.805,
+    "recall@10": 0.8533,
+    "recall@16": 0.89,
+    "recall@20": 0.9083,
+    "recall@32": 0.9483,
+    "recall@48": 0.98
+   },
+   "minilm/none/library": {
+    "recall@1": 0.285,
+    "recall@5": 0.6083,
+    "recall@10": 0.7467,
+    "recall@16": 0.805,
+    "recall@20": 0.8433,
+    "recall@32": 0.895,
+    "recall@48": 0.97
+   },
+   "nomic/sym/bare": {
+    "recall@1": 0.5467,
+    "recall@5": 0.8033,
+    "recall@10": 0.8583,
+    "recall@16": 0.885,
+    "recall@20": 0.91,
+    "recall@32": 0.9583,
+    "recall@48": 0.9867
+   },
+   "nomic/sym/library": {
+    "recall@1": 0.3517,
+    "recall@5": 0.6017,
+    "recall@10": 0.7017,
+    "recall@16": 0.795,
+    "recall@20": 0.8383,
+    "recall@32": 0.9133,
+    "recall@48": 0.95
+   },
+   "nomic/asym/bare": {
+    "recall@1": 0.5067,
+    "recall@5": 0.7633,
+    "recall@10": 0.8283,
+    "recall@16": 0.875,
+    "recall@20": 0.8917,
+    "recall@32": 0.9417,
+    "recall@48": 0.9833
+   },
+   "nomic/asym/library": {
+    "recall@1": 0.305,
+    "recall@5": 0.5733,
+    "recall@10": 0.6783,
+    "recall@16": 0.7617,
+    "recall@20": 0.8067,
+    "recall@32": 0.89,
+    "recall@48": 0.975
+   }
+  }
+ },
+ "device": "mps",
+ "revisions": {
+  "BAAI/bge-small-en-v1.5": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+  "sentence-transformers/all-MiniLM-L6-v2": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "nomic-ai/modernbert-embed-base": "d556a88e332558790b210f7bdbe87da2fa94a8d8"
+ }
+}

@@ -27,3 +27,12 @@ leads_persona.py
 probe_leads.py
 out/leads_persona.json
 out/probe_leads.json
+
+# Laya #102 本地交接与运行产物：只留在本机，结果文件和报告照常入库
+out/laya102/STATUS.md
+out/laya102/*.log
+out/laya102/*.sh
+out/laya102/smoke_*
+out/laya102/issue102_*
+out/laya102/laya950_results.json
+out/laya102/colcenter_probe.*
