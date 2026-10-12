@@ -394,8 +394,33 @@ The rows check out first: Laya 0.4.4 reproduces all nine `single` / `wide` / `to
   cells, but top-1 and shortlist accuracy change by −1.6 to +0.8 pp, none significant. On these rows the gain
   comes from the shortlist structure, not from our score.
 
-Code: `laya102_bench.py`, `laya102_colcenter.py`, `laya102_report.py`. Results, per-row files and the full
-report: [`out/laya102/`](out/laya102/) ([REPORT.md](out/laya102/REPORT.md)).
+**What the documented path gives.** Laya's README example and its MCP `laya_shortlist` tool build the shortlist
+with the decision model's own encoder (`laya.embed_fn_from_agent`). On the same rows, through Laya 0.4.6's own
+functions (`laya102_paths.py`, same checkpoint):
+
+| 500 official test rows, MPS, top-20 → Laya once | BANKING77 | CLINC150 | MASSIVE |
+|---|---|---|---|
+| no shortlist | 41.6 % | 60.4 % | 54.2 % |
+| Laya's encoder, documented query (`predict_shortlist`) | 22.4 % | 18.8 % | 18.4 % |
+| Laya's encoder, message only | 30.4 % | 28.4 % | 30.2 % |
+| BGE-small, documented query | 63.0 % | 76.8 % | 57.8 % |
+| **BGE-small, message only** (`shortlist_choice(message, ...)`) | 63.0 % | **87.2 %** | **65.2 %** |
+
+- **Laya's own encoder keeps the gold label among the 20 on 20–30 % of rows** (recall@20 29.6 / 19.8 / 27.8 %),
+  so its shortlist answers below no shortlist at all, even with the message alone. This path is #950's
+  published `shortlist` row, reproduced exactly; the `embed_fn_from_agent` docstring already says a dedicated
+  bi-encoder will usually shortlist better.
+- **The sentence embedder is the step that matters**: BGE-small in the same documented call is
+  +40.6 / +58.0 / +39.4 pp (p < 0.001).
+- **Embedding the message alone** then adds +10.4 pp on CLINC150 and +7.4 on MASSIVE (p < 0.001) and 0.0 on
+  BANKING77, where the JSON state alone is 3.2 pp better (p = 0.011). It needs no API change:
+  `laya.shortlist_choice` embeds a string state as it is.
+- BGE-small with no prefix lands within 1 pp of our development-chosen setting (its retrieval instruction on the
+  query) on all three datasets. Without an external embedder, Laya's tournament (58.4 / 89.4 / 59.0 %) is the
+  better built-in route.
+
+Code: `laya102_bench.py`, `laya102_colcenter.py`, `laya102_paths.py`, `laya102_report.py`. Results, per-row
+files and the full report: [`out/laya102/`](out/laya102/) ([REPORT.md](out/laya102/REPORT.md)).
 
 ## What did not work
 

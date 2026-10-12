@@ -259,6 +259,66 @@ def main():
                 cells.append(paired((pick[src_a], arm_a), (pick[src_b], arm_b)))
             w("| `%s vs %s` | %s |" % (arm_a, arm_b, " | ".join(cells)))
 
+    paths = {ds: load_run(folder, f"paths_{ds}_a_mps") for ds in DATASETS}
+    if any(paths.values()):
+        # laya102_paths.py writes each row's arms at the top level; give them the main runs' shape
+        paths = {ds: x and (x[0], [{"i": r["i"], "gold": r["gold"],
+                                    "arms": {k: v for k, v in r.items() if k not in ("i", "gold")}} for r in x[1]])
+                 for ds, x in paths.items()}
+        rep = next(x for x in paths.values() if x)[0]
+        arms = list(rep["arms"])
+        w("\n## Add-on: the shortlist paths Laya documents, Laya %s, %s (k=%d, same rows)\n" % (
+            rep["laya"], run_name("a", rep["device"]), rep["k"]))
+        w("`laya102_paths.py`, Laya %s (commit `%s`, checkpoint `%s`), every call through Laya's own functions, "
+          "every embedder wrapped in `laya.cached_embed_fn`. Embedders: `agent` = `laya.embed_fn_from_agent(agent)` "
+          "(the README example; the MCP `laya_shortlist` tool makes the same call); `bge` = `%s`, no prefix; "
+          "`minilm` = `%s`. Query text: `default` = `laya.predict_shortlist` as documented (instructions + "
+          "newline + JSON state); `state` = `laya.shortlist_choice` on the JSON state; `message` = "
+          "`laya.shortlist_choice` on the message string. Every shortlist then gets one `agent.predict` with "
+          "#950's full question; `single` = no shortlist. Cell = accuracy [95 %% Wilson] (recall@20).\n" % (
+              rep["laya"], rep["laya_commit"][:7], rep["laya_checkpoint"][:7],
+              rep["models"]["bge"], rep["models"]["minilm"]))
+        w("| arm | " + " | ".join(DATASETS) + " |\n|---|" + "---:|" * len(DATASETS))
+        for arm in arms:
+            cells = []
+            for ds in DATASETS:
+                a = paths[ds][0]["arms"][arm] if paths[ds] else None
+                cells.append("—" if a is None else "%s [%s–%s]%s" % (
+                    pct(a["accuracy"]), pct(a["ci95"][0]), pct(a["ci95"][1]),
+                    " (%s)" % pct(a["recall@%d" % rep["k"]]) if "recall@%d" % rep["k"] in a else ""))
+            w("| `%s` | %s |" % (arm, " | ".join(cells)))
+        w("")
+        for ds in DATASETS:
+            if paths[ds] is None or primary[ds] is None:
+                continue
+            same = sum(x["arms"]["single"]["ok"] == y["arms"]["single"]["ok"]
+                       for x, y in zip(paths[ds][1], primary[ds][1]))
+            pub = published.get("sample", {}).get(ds, {}).get("strategies", {}).get("shortlist", {})
+            w("- %s: `single` scores the same as the main Laya %s run on %d of %d rows; `agent:default` %s, "
+              "#950's published `shortlist` %s" % (ds, primary[ds][0]["laya"], same, len(paths[ds][1]),
+                                                    pct(paths[ds][0]["arms"]["agent:default"]["accuracy"]),
+                                                    pct(pub.get("accuracy"))))
+
+        w("\nPaired on the same rows (delta in points; gained / lost rows; exact McNemar p). `tournament` and "
+          "`small:shortlist` (BGE-small with its retrieval instruction on the bare message) come from the main "
+          "%s run, Laya %s.\n" % (run_name("a", "mps"), any_rep["laya"]))
+        comps = [("bge:default", "x", "agent:default", "x"), ("agent:default", "x", "single", "x"),
+                 ("agent:message", "x", "single", "x"), ("agent:message", "x", "agent:default", "x"),
+                 ("bge:message", "x", "bge:default", "x"), ("bge:state", "x", "bge:default", "x"),
+                 ("bge:message", "x", "bge:state", "x"), ("minilm:message", "x", "minilm:default", "x"),
+                 ("agent:default", "x", "tournament", "p"), ("bge:message", "x", "tournament", "p"),
+                 ("bge:message", "x", "small:shortlist", "p")]
+        w("| comparison | " + " | ".join(DATASETS) + " |\n|---|" + "---|" * len(DATASETS))
+        for arm_a, src_a, arm_b, src_b in comps:
+            cells = []
+            for ds in DATASETS:
+                if paths[ds] is None or primary[ds] is None:
+                    cells.append("—")
+                    continue
+                pick = {"x": paths[ds][1], "p": primary[ds][1]}
+                cells.append(paired((pick[src_a], arm_a), (pick[src_b], arm_b)))
+            w("| `%s vs %s` | %s |" % (arm_a, arm_b, " | ".join(cells)))
+
     cc_path = folder / "colcenter.json"
     if cc_path.exists():
         cc = json.loads(cc_path.read_text())

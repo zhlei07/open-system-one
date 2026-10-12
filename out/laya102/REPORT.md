@@ -192,6 +192,43 @@ Paired on the same rows (delta in points; gained / lost rows; exact McNemar p). 
 | `nomic-qd-lib:shortlist vs small:shortlist` | -1.0 (34/39, p=0.640) | -14.6 (19/92, p<0.001) | -11.0 (29/84, p<0.001) |
 | `nomic-qd-lib:shortlist vs nomic-qd:shortlist` | -0.4 (31/33, p=0.901) | -14.2 (18/89, p<0.001) | -1.8 (47/56, p=0.431) |
 
+## Add-on: the shortlist paths Laya documents, Laya 0.4.6, A MPS (k=20, same rows)
+
+`laya102_paths.py`, Laya 0.4.6 (commit `c73908d`, checkpoint `55cf4c4`), every call through Laya's own functions, every embedder wrapped in `laya.cached_embed_fn`. Embedders: `agent` = `laya.embed_fn_from_agent(agent)` (the README example; the MCP `laya_shortlist` tool makes the same call); `bge` = `BAAI/bge-small-en-v1.5`, no prefix; `minilm` = `sentence-transformers/all-MiniLM-L6-v2`. Query text: `default` = `laya.predict_shortlist` as documented (instructions + newline + JSON state); `state` = `laya.shortlist_choice` on the JSON state; `message` = `laya.shortlist_choice` on the message string. Every shortlist then gets one `agent.predict` with #950's full question; `single` = no shortlist. Cell = accuracy [95 % Wilson] (recall@20).
+
+| arm | banking77 | clinc150 | massive |
+|---|---:|---:|---:|
+| `single` | 41.6 [37.4–46.0] | 60.4 [56.0–64.6] | 54.2 [49.8–58.5] |
+| `agent:default` | 22.4 [19.0–26.3] (29.6) | 18.8 [15.6–22.5] (19.8) | 18.4 [15.2–22.0] (27.8) |
+| `agent:state` | 25.2 [21.6–29.2] (31.4) | 21.8 [18.4–25.6] (23.0) | 22.0 [18.6–25.8] (31.2) |
+| `agent:message` | 30.4 [26.5–34.6] (38.4) | 28.4 [24.6–32.5] (29.8) | 30.2 [26.3–34.4] (37.0) |
+| `bge:default` | 63.0 [58.7–67.1] (92.6) | 76.8 [72.9–80.3] (81.6) | 57.8 [53.4–62.1] (89.2) |
+| `bge:state` | 66.2 [61.9–70.2] (96.6) | 85.2 [81.8–88.0] (93.4) | 61.4 [57.1–65.6] (93.0) |
+| `bge:message` | 63.0 [58.7–67.1] (98.0) | 87.2 [84.0–89.8] (95.6) | 65.2 [60.9–69.2] (94.4) |
+| `minilm:default` | 62.8 [58.5–66.9] (94.2) | 79.0 [75.2–82.3] (86.0) | 60.2 [55.9–64.4] (84.6) |
+| `minilm:state` | 63.2 [58.9–67.3] (97.0) | 82.2 [78.6–85.3] (90.8) | 60.2 [55.9–64.4] (87.8) |
+| `minilm:message` | 62.6 [58.3–66.7] (97.0) | 86.6 [83.3–89.3] (96.4) | 60.6 [56.2–64.8] (92.4) |
+
+- banking77: `single` scores the same as the main Laya 0.4.4 run on 500 of 500 rows; `agent:default` 22.4, #950's published `shortlist` 22.4
+- clinc150: `single` scores the same as the main Laya 0.4.4 run on 500 of 500 rows; `agent:default` 18.8, #950's published `shortlist` 18.8
+- massive: `single` scores the same as the main Laya 0.4.4 run on 500 of 500 rows; `agent:default` 18.4, #950's published `shortlist` 18.4
+
+Paired on the same rows (delta in points; gained / lost rows; exact McNemar p). `tournament` and `small:shortlist` (BGE-small with its retrieval instruction on the bare message) come from the main A MPS run, Laya 0.4.4.
+
+| comparison | banking77 | clinc150 | massive |
+|---|---|---|---|
+| `bge:default vs agent:default` | +40.6 (226/23, p<0.001) | +58.0 (312/22, p<0.001) | +39.4 (213/16, p<0.001) |
+| `agent:default vs single` | -19.2 (60/156, p<0.001) | -41.6 (54/262, p<0.001) | -35.8 (23/202, p<0.001) |
+| `agent:message vs single` | -11.2 (78/134, p<0.001) | -32.0 (76/236, p<0.001) | -24.0 (46/166, p<0.001) |
+| `agent:message vs agent:default` | +8.0 (73/33, p<0.001) | +9.6 (68/20, p<0.001) | +11.8 (85/26, p<0.001) |
+| `bge:message vs bge:default` | +0.0 (25/25, p=1.000) | +10.4 (68/16, p<0.001) | +7.4 (67/30, p<0.001) |
+| `bge:state vs bge:default` | +3.2 (32/16, p=0.029) | +8.4 (55/13, p<0.001) | +3.6 (48/30, p=0.053) |
+| `bge:message vs bge:state` | -3.2 (10/26, p=0.011) | +2.0 (19/9, p=0.087) | +3.8 (43/24, p=0.027) |
+| `minilm:message vs minilm:default` | -0.2 (27/28, p=1.000) | +7.6 (53/15, p<0.001) | +0.4 (29/27, p=0.894) |
+| `agent:default vs tournament` | -36.0 (35/215, p<0.001) | -70.6 (13/366, p<0.001) | -40.6 (11/214, p<0.001) |
+| `bge:message vs tournament` | +4.6 (52/29, p=0.014) | -2.2 (22/33, p=0.177) | +6.2 (71/40, p=0.004) |
+| `bge:message vs small:shortlist` | +0.0 (17/17, p=1.000) | +0.4 (11/9, p=0.824) | +0.8 (24/20, p=0.652) |
+
 ## Column-centering (open-system-one's shortlist score), A MPS
 
 Score = cos + (cos - mu), mu fitted on the unlabeled development-split texts (`laya_shortlist.py`: cosine + column-centered cosine), 600 development rows per dataset, labels not read. Plain → centered; paired delta in points (gained / lost rows, exact McNemar p). The plain top-20 lists match the main runs on every row.

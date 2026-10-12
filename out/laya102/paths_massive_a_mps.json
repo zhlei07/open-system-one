@@ -1,0 +1,95 @@
+{
+ "dataset": "massive",
+ "rows": 500,
+ "k": 20,
+ "laya": "0.4.6",
+ "laya_commit": "c73908d96ff73c0062c340a11bf7c54ec7d8bc4d",
+ "laya_checkpoint": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851",
+ "device": "mps",
+ "models": {
+  "bge": "BAAI/bge-small-en-v1.5",
+  "minilm": "sentence-transformers/all-MiniLM-L6-v2"
+ },
+ "wall_s": 167.1,
+ "arms": {
+  "single": {
+   "accuracy": 0.542,
+   "ci95": [
+    0.4982,
+    0.5852
+   ]
+  },
+  "agent:default": {
+   "accuracy": 0.184,
+   "ci95": [
+    0.1525,
+    0.2203
+   ],
+   "recall@20": 0.278
+  },
+  "agent:state": {
+   "accuracy": 0.22,
+   "ci95": [
+    0.1859,
+    0.2584
+   ],
+   "recall@20": 0.312
+  },
+  "agent:message": {
+   "accuracy": 0.302,
+   "ci95": [
+    0.2634,
+    0.3436
+   ],
+   "recall@20": 0.37
+  },
+  "bge:default": {
+   "accuracy": 0.578,
+   "ci95": [
+    0.5343,
+    0.6205
+   ],
+   "recall@20": 0.892
+  },
+  "bge:state": {
+   "accuracy": 0.614,
+   "ci95": [
+    0.5706,
+    0.6556
+   ],
+   "recall@20": 0.93
+  },
+  "bge:message": {
+   "accuracy": 0.652,
+   "ci95": [
+    0.6092,
+    0.6925
+   ],
+   "recall@20": 0.944
+  },
+  "minilm:default": {
+   "accuracy": 0.602,
+   "ci95": [
+    0.5585,
+    0.644
+   ],
+   "recall@20": 0.846
+  },
+  "minilm:state": {
+   "accuracy": 0.602,
+   "ci95": [
+    0.5585,
+    0.644
+   ],
+   "recall@20": 0.878
+  },
+  "minilm:message": {
+   "accuracy": 0.606,
+   "ci95": [
+    0.5625,
+    0.6479
+   ],
+   "recall@20": 0.924
+  }
+ }
+}
