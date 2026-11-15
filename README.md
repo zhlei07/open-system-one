@@ -14,6 +14,8 @@ which ideas worked, which didn't, and what each one costs in latency, RAM and CP
 [results explorer](https://huggingface.co/spaces/dylantom2012/open-system-one) ·
 [live demo](https://huggingface.co/spaces/dylantom2012/open-system-one-demo)
 
+**Update (2026-11-15)** — the same 8-float head on a 0.5-second video event: [15/16 events, ≤ 43 ms](#update--the-same-8-float-head-moved-to-video).
+
 中文版：[README.zh.md](README.zh.md) · 详细报告：[REPORT.md](out/REPORT.md)
 
 ---
@@ -421,6 +423,85 @@ functions (`laya102_paths.py`, same checkpoint):
 
 Code: `laya102_bench.py`, `laya102_colcenter.py`, `laya102_paths.py`, `laya102_report.py`. Results, per-row
 files and the full report: [`out/laya102/`](out/laya102/) ([REPORT.md](out/laya102/REPORT.md)).
+
+## Update — the same 8-float head, moved to video
+
+The decision head in this repo was not invented for text. It is the scoring function of an
+online palletizing simulator (`fly/palletizer`, not in this repo): generate candidates at run time,
+describe each with a few normalised features, score with `w·φ`, take the argmax, and search the 8
+weights with a (1+λ)-ES against **0.7 × mean + 0.3 × worst**. This repo moved that recipe from box
+placements to text options. On 2026-11-15 we moved it a third time, to a **0.5-second visual event**
+on a live screen: deciding the moment a fishing bobber in a game is bitten (a splash that lasts
+~0.3 s), from a 30 fps window capture, on CPU.
+
+| | palletizing | text routing (this repo) | video event |
+|---|---|---|---|
+| candidates | legal box placements | the request's options | {bite, calm} for the last 0.5 s |
+| the 8 floats score | height, flatness, support, side contact… | similarity to each option's description | sink, displacement, local-vs-surround change, motion… |
+| objective the ES optimises | pallet utilisation | accuracy | "fire within 0.8 s after the bite, never before" |
+| result | 41.4 % → 46.0 % utilisation | 8M static embedding + 8 floats, 0.1 ms, 82 MB | 15 / 16 bites, latency ≤ 43 ms |
+
+**How it was trained without hand labels.** A *teacher* that may look at the future: the player
+reels in after a bite, so in the 4 s before the reel-in the strongest local motion/shape change is
+the splash, traced back to its first frame. The *student* (the 8 floats) only sees the 0.5 s before
+the current frame. Options are {bite, calm}; "calm" scores 0, so the head fires when `w·φ > 0`.
+Training uses a margin of 0.2 (in |w|-normalised units) and non-negative feature weights (each
+feature is evidence *for* a bite; with 16 examples, that prior keeps the search from fitting noise).
+A hard gate skips windows where the whole surrounding area changes at once (another player's spell
+effect sweeping across the frame). **Disclosure:** only the margin was fixed in advance. The
+non-negative weights, the gate and a 1-second minimum baseline were added after inspecting the
+false alarms of the first leave-one-out run (9 / 13 hits, 4 false alarms), so the leave-one-out
+figures below have seen part of their test data through those choices. The live run further down
+did not.
+
+**Results.** Leave-one-cast-out over every usable cast; each cast is scored by a head that never saw it.
+
+| | hits | misses | late (>0.8 s) | false alarms (3.0 min of calm water) | hit latency |
+|---|---|---|---|---|---|
+| **Fly head, 8 floats** | **15 / 16** | 0 | 0 | 1 | median 0 ms, max 43 ms |
+| Best single threshold on the strongest feature | 10 / 16 | 2 | 2 | 2 | median 34 ms, max 146 ms |
+
+The first live run used a head trained only on the earlier recording: **3 / 3 bites hit, 0 false
+alarms, at most one frame (34 ms) after the splash began**, 2 ms from frame to decision. That is
+three events, not a benchmark — we report it because it is the only fully unseen data so far.
+Three casts out of 19 were excluded and are listed on the review page rather than counted: one
+where the game was in the background (14 fps), one where the bobber was never found, one where it
+was found in the wrong place.
+
+**What this says about the head — and what it doesn't.**
+
+- **The 8 floats are the cheap part.** Their search takes seconds. About 80 % of the work was
+  finding the right bobber (template matching against a background that excludes the previous
+  cast's bobber, other players' bobbers and wind-blown plants) and measuring how it moved.
+  That matches the text result above: the architecture and the features decide accuracy
+  (+12 to +24 pp from cross-encoding); the head decides cost.
+- **Where ES earned its place.** Same features, same protocol: one threshold catches 10 / 16,
+  the 8-float head catches 15 / 16. The gain comes from optimising the real, non-differentiable
+  objective directly — "on time, never early" is a rule about the *first* firing in a cast, which
+  is awkward to express as a per-window loss. This does not contradict the −1.5 pp row in
+  *What did not work*: that was transferring weights *across* tasks; here the weights are fitted
+  to one task and compared with a single threshold, not with a stronger model.
+- **Audit the teacher.** The first live review scored the model 0 / 3, all "too early by 1–2.6 s".
+  The frames showed the model was right to the frame; the teacher had locked onto the game's
+  mouse-hover highlight on the bobber (bright, motionless) because the player hovered longer
+  than usual before clicking. Removing brightness from the teacher left all 13 earlier labels
+  unchanged to the frame and turned the live result into 3 / 3. A wrong teacher makes a correct
+  model look broken; the per-cast slow-motion clips are what caught it.
+
+**Where this recipe fits.** It is a cheap, fast, inspectable *decider*, not an understander:
+
+| fits | does not fit |
+|---|---|
+| choose one of a few candidates, or decide yes/no | generating text or answers |
+| a handful of meaningful numbers can be measured | the hard part *is* understanding open text/images, and data is plentiful |
+| tens to hundreds of examples, or a simulator, or a teacher that sees the outcome later | the rule fits in one sentence (just write the rule) |
+| needs to run in microseconds, offline, and be explainable | |
+
+The pattern most worth reusing is **"large model or hindsight as the teacher, 8 floats as the
+student"**: label a few hundred cases with something slow or with outcomes known only later,
+then serve the decision at sub-millisecond cost with weights you can read. The detector itself
+(capture, overlay, game-specific code) lives in a separate project and only observes and alerts;
+this section records the numbers and what transferred.
 
 ## What did not work
 
